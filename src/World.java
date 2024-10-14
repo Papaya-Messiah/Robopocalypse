@@ -12,22 +12,17 @@ public class World {
     //2d grid of the world
     private Cell[][] grid;
     //side length of the square grid
-    private int worldSize = 50;
-    private int worldHeight;
-    private int worldWidth;
+    public int worldSize = 50;
     //this String holds the most recent update of the world
     private String display;
 
     //constructor
     private World() {
-        //having height be width/2 makes for a nice squarish shape in the console
-        worldHeight = worldSize/2;
-        worldWidth = worldSize;
-        grid = new Cell[worldHeight][worldWidth];
+        grid = new Cell[worldSize][worldSize];
 
         //initializing cells to hold a value
-        for (int i = 0; i < worldHeight; i++) {
-            for (int j = 0; j < worldWidth; j++) {
+        for (int i = 0; i < worldSize; i++) {
+            for (int j = 0; j < worldSize; j++) {
                 grid[i][j] = new Cell("wall");
             }
         }
@@ -45,11 +40,25 @@ public class World {
     //updates what will be displayed. Encapsulated here because printing in a for loop causes flickering.
     public void update() {
         display = "";
-        for (int i = 0; i < worldHeight; i++) {
-            for (int j = 0; j < worldWidth; j++) {
+        for (int i = 0; i < worldSize; i++) {
+            for (int j = 0; j < worldSize; j++) {
                 display += grid[i][j].toString();
             }
             display += "\n";
         }
+    }
+
+    public Cell[][] getGrid() {
+        return grid;
+    }
+
+    public Cell getCell(int x, int y) {
+        return grid[x][y];
+    }
+
+    public int measureDistance(int x1, int y1, int x2, int y2) {
+        int distance;
+        distance = Math.abs(x1-x2) + Math.abs(y1-y2);
+        return distance;
     }
 }

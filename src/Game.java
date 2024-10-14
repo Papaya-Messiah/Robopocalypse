@@ -19,7 +19,13 @@ public class Game {
         return instance;
     }
 
+    private void init() {
+        int worldSize = World.getInstance().worldSize;
+        Player.getInstance().setCoords(worldSize/2, worldSize/2);
+    }
+
     public void run() {
+        init();
         //main game loop
         while (true) {
             clearScreen();
@@ -28,7 +34,7 @@ public class Game {
 
             //wait (in ms) between screen updates
             try {
-                Thread.sleep(200);
+                Thread.sleep(250);
             } catch (Exception e) {}
         }
     }

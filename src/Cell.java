@@ -8,25 +8,45 @@
 
 public class Cell {
     //main label of the cell
-    public String type;
-    //boolean to determine if the cell will be displayed
-    public boolean visible;
+    private String type;
+    private boolean visible;
 
     //parameterized constructor
     public Cell(String t) {
         type = t;
-        visible = true;
+        visible = false;
+    }
+
+    public void setType(String t) {
+        type = t;
     }
 
     //returns a single ASCII character representation of the type of cell
     public String toString() {
-        switch (type) {
-            case "empty":
-                return " ";
-            case "wall":
-                return "█";
-            default:
-                return "X";
+        if (visible) {
+            switch (type) {
+                case "player":
+                    return "◁▷";
+                case "enemy":
+                    return "╳";
+                case "item":
+                    return "◉";
+                case "empty":
+                    return "  ";
+                case "wall":
+                    return "██";
+                default:
+                    return "X";
+            }
         }
+        else { return "  "; }
+    }
+
+    public void toggleVisible() {
+        visible = !visible;
+    }
+
+    public boolean getVisible() {
+        return visible;
     }
 }

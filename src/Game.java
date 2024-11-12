@@ -25,26 +25,16 @@ public class Game {
     }
 
     public void run() {
+        //initialize game
         init();
-        //main game loop
+
+        //show first display of the game
+        World.getInstance().showDisplay();
+        World.getInstance().sendEvent();
+        //constantly handle events sent by the different objects in the game
         while (true) {
-            clearScreen();
-            World.getInstance().update();
-            World.getInstance().showDisplay();
-
-            //wait (in ms) between screen updates
-            try {
-                Thread.sleep(250);
-            } catch (Exception e) {}
+            EventHandler.getInstance().handleEvent();
         }
     }
 
-    //dirty and inelegant way to clear the terminal, but here we are.
-    public void clearScreen() {
-        String lots_of_newlines = "";
-        for (int i = 0; i < 100; i++) {
-            lots_of_newlines += "\n";
-        }
-        System.out.println(lots_of_newlines);
-    }
 }

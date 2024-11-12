@@ -26,17 +26,17 @@ public class Cell {
         if (visible) {
             switch (type) {
                 case "player":
-                    return "◁▷";
+                    return "@@";
                 case "enemy":
-                    return "╳";
+                    return "!!";
                 case "item":
-                    return "◉";
+                    return "$$";
                 case "empty":
                     return "  ";
                 case "wall":
                     return "██";
                 default:
-                    return "X";
+                    return "ERROR";
             }
         }
         else { return "  "; }

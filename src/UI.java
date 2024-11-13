@@ -16,7 +16,7 @@ public class UI {
 
     public String toString() {
         String temp = "";
-        temp += "Stats:\tStr:\tAgi:\tDef:\t\n";
+        temp += "Stats:\tStr: " + Player.getInstance().getStr() + "\tAgi: " + Player.getInstance().getAgi() + " \tDef: " + Player.getInstance().getDef() + "\t\n";
         temp += "\n";
         temp += "Inventory\n";
         temp += "Ion cannon\n";

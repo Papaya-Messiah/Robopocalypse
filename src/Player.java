@@ -6,11 +6,14 @@
  * Is an eager-instantiation Singleton.
  */
 
+import java.util.ArrayList;
+
 public class Player {
     private static Player instance = new Player();
     private int x_pos;
     private int y_pos;
     private int view_distance;
+    private ArrayList<Item> inventory;
 
     //constructor
     private Player() {
@@ -41,5 +44,9 @@ public class Player {
                 }
             }
         }
+    }
+
+    public void addItem(Item i){
+        inventory.add(i);
     }
 }

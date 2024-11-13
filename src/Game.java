@@ -29,8 +29,8 @@ public class Game {
         init();
 
         //show first display of the game
-        World.getInstance().showDisplay();
-        World.getInstance().sendEvent();
+        Display.getInstance().display();
+        Display.getInstance().sendEvent();
         //constantly handle events sent by the different objects in the game
         while (true) {
             EventHandler.getInstance().handleEvent();

@@ -13,8 +13,6 @@ public class World {
     private Cell[][] grid;
     //side length of the square grid
     public int worldSize = 40;
-    //this String holds the most recent update of the world
-    private String display;
 
     //constructor
     private World() {
@@ -32,28 +30,15 @@ public class World {
         return instance;
     }
 
-    //Displays the (visible) world in the terminal.
-    public void showDisplay() {
-        clearScreen();
-        update();
-        System.out.println(display);
-    }
-
-    //dirty and inelegant way to clear the terminal, but here we are.
-    public void clearScreen() {
-        String lots_of_newlines = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-        System.out.println(lots_of_newlines);
-    }
-    
-    //updates what will be displayed
-    private void update() {
-        display = "";
+    public String toString() {
+        String display = "";
         for (int i = 0; i < worldSize; i++) {
             for (int j = 0; j < worldSize; j++) {
                 display += grid[i][j].toString();
             }
             display += "\n";
         }
+        return display;
     }
 
     public Cell[][] getGrid() {
@@ -73,6 +58,6 @@ public class World {
 
     //send an Event to the handler
     public void sendEvent() {
-        EventHandler.getInstance().sendEvent(new Event(this));
+        EventHandler.getInstance().queueEvent(new Event(this));
     }
 }

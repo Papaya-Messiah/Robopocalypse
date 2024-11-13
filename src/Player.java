@@ -49,4 +49,12 @@ public class Player {
     public void addItem(Item i){
         inventory.add(i);
     }
+
+    public String descInventory(){
+        String invString = "";
+        for (Item i : inventory){
+            invString += (i.getName() + "\n");
+        }
+        return invString;
+    }
 }

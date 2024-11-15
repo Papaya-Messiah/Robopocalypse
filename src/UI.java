@@ -15,14 +15,14 @@ public class UI {
     }
 
     public String getMsg() {
-        String temp = "";
+        String temp = "";]
         temp += "Message Placeholder";
         return temp;
     }
 
     public String getStats() {
         String temp = "";
-        temp += "Stats Placeholder";
+        temp += "Stats:\nStr:\t" + Player.getInstance().getStr() + "\nAgi:\t" + Player.getInstance().getAgi() + " \nDef:\t" + Player.getInstance().getDef();
         return temp;
     }
 

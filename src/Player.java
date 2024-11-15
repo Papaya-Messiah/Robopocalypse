@@ -13,16 +13,70 @@ public class Player {
     private int x_pos;
     private int y_pos;
     private int view_distance;
+    private int str;
+    private int agi;
+    private int def; 
+    private int con;
+    private int health;
+    private boolean isDead = false;
     private Cell.CellType currentCellType = Cell.CellType.WALL;
     private ArrayList<Item> inventory;
-
     //constructor
     private Player() {
         view_distance = 5;
+        this.str = 10;
+        this.agi = 10;
+        this.con = 10;
+        this.health = con * 4;
+        this.def = 10;
     }
 
     public static Player getInstance() {
         return instance;
+    }
+  
+    public int getHealth(){
+        return health;
+    }
+  
+    public void setHealth(int h){
+        this.health = h;
+        if (this.health <= 0){
+            isDead = true;
+        }
+    }
+  
+    public boolean returnDeathFlag(){
+        return isDead;
+    }
+  
+    public int getStr(){
+        return str;
+    }
+  
+    public int getAgi(){
+        return agi;
+    }
+  
+    public int getCon(){
+        return con;
+    }
+  
+    public int getDef(){
+        return def;
+    }
+  
+    public void setDef(int d){
+        this.def = d;
+    }
+    public void setStr(int s){
+        this.str = s;
+    }
+    public void setAgi(int a){
+        this.agi = a;
+    }
+    public void setCon(int c){
+        this.con = c;
     }
 
     public int getX() {

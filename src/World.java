@@ -8,13 +8,11 @@
  */
 
 public class World {
-    public static World instance = new World();
+    private static World instance = new World();
     //2d grid of the world
     private Cell[][] grid;
     //side length of the square grid
-    public int worldSize = 40;
-    //this String holds the most recent update of the world
-    private String display;
+    public int worldSize = 50;
 
     //constructor
     private World() {
@@ -23,7 +21,15 @@ public class World {
         //initializing cells to hold a value
         for (int i = 0; i < worldSize; i++) {
             for (int j = 0; j < worldSize; j++) {
-                grid[i][j] = new Cell("wall");
+                if (i == 0 || j == 0) {
+                    grid[i][j] = new Cell(Cell.CellType.WALL);
+                }
+                else if (i == worldSize-1 || j ==worldSize-1) {
+                    grid[i][j] = new Cell(Cell.CellType.WALL);
+                }
+                else {
+                    grid[i][j] = new Cell(Cell.CellType.EMPTY);
+                }
             }
         }
     }
@@ -32,28 +38,15 @@ public class World {
         return instance;
     }
 
-    //Displays the (visible) world in the terminal.
-    public void showDisplay() {
-        clearScreen();
-        update();
-        System.out.println(display);
-    }
-
-    //dirty and inelegant way to clear the terminal, but here we are.
-    public void clearScreen() {
-        String lots_of_newlines = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-        System.out.println(lots_of_newlines);
-    }
-    
-    //updates what will be displayed
-    private void update() {
-        display = "";
+    public String toString() {
+        String display = "";
         for (int i = 0; i < worldSize; i++) {
             for (int j = 0; j < worldSize; j++) {
                 display += grid[i][j].toString();
             }
             display += "\n";
         }
+        return display;
     }
 
     public Cell[][] getGrid() {
@@ -61,7 +54,8 @@ public class World {
     }
 
     public Cell getCell(int x, int y) {
-        return grid[x][y];
+        //x and y are switched on purpose here to make the axes what one would normally expect
+        return grid[y][x];
     }
 
     //returns the distance between the cells at two x,y coords.
@@ -73,6 +67,6 @@ public class World {
 
     //send an Event to the handler
     public void sendEvent() {
-        EventHandler.getInstance().sendEvent(new Event(this));
+        EventHandler.getInstance().queueEvent(new Event(this));
     }
 }

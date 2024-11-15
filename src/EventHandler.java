@@ -24,12 +24,7 @@ public class EventHandler {
     public void handleEvent() {
         if (!events.isEmpty()) {
             //handle event in some way depending on the object inside it
-            switch (events.get(0).getObject().getClass().getSimpleName()) {
-                case "World":
-                    System.out.println("A World object was passed in an event to the EventHandler!");
-                    World.getInstance().showDisplay();
-                    break;
-            
+            switch (events.get(0).getObject().getClass().getSimpleName()) {            
                 default:
                     System.out.println("The object passed in the event to the EventHandler is not handled");
                     break;
@@ -40,7 +35,7 @@ public class EventHandler {
     }
 
     //add an event to the handling queue
-    public void sendEvent(Event e) {
+    public void queueEvent(Event e) {
         events.add(e);
     }
 }

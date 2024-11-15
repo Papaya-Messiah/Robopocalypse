@@ -15,7 +15,7 @@ public class UI {
     }
 
     public String getMsg() {
-        String temp = "";]
+        String temp = "";
         temp += "Message Placeholder";
         return temp;
     }

@@ -14,16 +14,27 @@ public class UI {
         return instance;
     }
 
-    public String toString() {
+    public String getMsg() {
+        String temp = "";]
+        temp += "Message Placeholder";
+        return temp;
+    }
+
+    public String getStats() {
         String temp = "";
-        temp += "Stats:\tStr: " + Player.getInstance().getStr() + "\tAgi: " + Player.getInstance().getAgi() + " \tDef: " + Player.getInstance().getDef() + "\t\n";
-        temp += "\n";
-        temp += "Inventory\n";
-        temp += "Ion cannon\n";
-        temp += "Spring\n";
-        temp += "Socket Wrench\n";
-        temp += "test\n";
-        temp += "test\n";
+        temp += "Stats:\nStr:\t" + Player.getInstance().getStr() + "\nAgi:\t" + Player.getInstance().getAgi() + " \nDef:\t" + Player.getInstance().getDef();
+        return temp;
+    }
+
+    public String getInv() {
+        String temp = "";
+        temp += "Inventory Placeholder";
+        return temp;
+    }
+
+    public String getControls() {
+        String temp = "";
+        temp += "Controls Placeholder";
         return temp;
     }
 }

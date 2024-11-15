@@ -24,12 +24,7 @@ public class EventHandler {
     public void handleEvent() {
         if (!events.isEmpty()) {
             //handle event in some way depending on the object inside it
-            switch (events.get(0).getObject().getClass().getSimpleName()) {
-                case "Display":
-                    System.out.println("A Display object was passed in an event to the EventHandler!");
-                    Display.getInstance().display();
-                    break;
-            
+            switch (events.get(0).getObject().getClass().getSimpleName()) {            
                 default:
                     System.out.println("The object passed in the event to the EventHandler is not handled");
                     break;

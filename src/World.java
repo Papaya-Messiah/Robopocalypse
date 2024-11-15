@@ -8,11 +8,11 @@
  */
 
 public class World {
-    public static World instance = new World();
+    private static World instance = new World();
     //2d grid of the world
     private Cell[][] grid;
     //side length of the square grid
-    public int worldSize = 40;
+    public int worldSize = 50;
 
     //constructor
     private World() {
@@ -21,7 +21,15 @@ public class World {
         //initializing cells to hold a value
         for (int i = 0; i < worldSize; i++) {
             for (int j = 0; j < worldSize; j++) {
-                grid[i][j] = new Cell("wall");
+                if (i == 0 || j == 0) {
+                    grid[i][j] = new Cell(Cell.CellType.WALL);
+                }
+                else if (i == worldSize-1 || j ==worldSize-1) {
+                    grid[i][j] = new Cell(Cell.CellType.WALL);
+                }
+                else {
+                    grid[i][j] = new Cell(Cell.CellType.EMPTY);
+                }
             }
         }
     }
@@ -46,7 +54,8 @@ public class World {
     }
 
     public Cell getCell(int x, int y) {
-        return grid[x][y];
+        //x and y are switched on purpose here to make the axes what one would normally expect
+        return grid[y][x];
     }
 
     //returns the distance between the cells at two x,y coords.

@@ -19,18 +19,16 @@ public class Game {
         return instance;
     }
 
+    //initializes the game
     private void init() {
         int worldSize = World.getInstance().worldSize;
         Player.getInstance().setCoords(worldSize/2, worldSize/2);
+        Display.getInstance().addKeyListener(new Controls());
     }
 
     public void run() {
-        //initialize game
         init();
 
-        //show first display of the game
-        World.getInstance().showDisplay();
-        World.getInstance().sendEvent();
         //constantly handle events sent by the different objects in the game
         while (true) {
             EventHandler.getInstance().handleEvent();

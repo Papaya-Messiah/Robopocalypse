@@ -8,32 +8,36 @@
 
 public class Cell {
     //main label of the cell
-    private String type;
+    private CellType type;
     private boolean visible;
 
     //parameterized constructor
-    public Cell(String t) {
+    public Cell(CellType t) {
         type = t;
         visible = false;
     }
 
-    public void setType(String t) {
+    public void setType(CellType t) {
         type = t;
+    }
+
+    public CellType getType() {
+        return type;
     }
 
     //returns a single ASCII character representation of the type of cell
     public String toString() {
         if (visible) {
             switch (type) {
-                case "player":
+                case PLAYER:
                     return "@@";
-                case "enemy":
+                case ENEMY:
                     return "!!";
-                case "item":
+                case ITEM:
                     return "$$";
-                case "empty":
+                case EMPTY:
                     return "  ";
-                case "wall":
+                case WALL:
                     return "██";
                 default:
                     return "ERROR";
@@ -42,11 +46,19 @@ public class Cell {
         else { return "  "; }
     }
 
-    public void toggleVisible() {
-        visible = !visible;
+    public void setVisible(boolean b) {
+        visible = b;
     }
 
     public boolean getVisible() {
         return visible;
+    }
+
+    public enum CellType {
+        PLAYER,
+        ENEMY,
+        ITEM,
+        EMPTY,
+        WALL
     }
 }

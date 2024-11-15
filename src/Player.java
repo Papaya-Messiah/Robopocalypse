@@ -6,12 +6,15 @@
  * Is an eager-instantiation Singleton.
  */
 
+import java.util.ArrayList;
+
 public class Player {
     private static Player instance = new Player();
     private int x_pos;
     private int y_pos;
     private int view_distance;
     private Cell.CellType currentCellType = Cell.CellType.WALL;
+    private ArrayList<Item> inventory;
 
     //constructor
     private Player() {
@@ -61,5 +64,17 @@ public class Player {
         }
         //after updating which cells are visible, update the display for the user
         Display.getInstance().updateWorldDisplay();
+    }
+
+    public void addItem(Item i){
+        inventory.add(i);
+    }
+
+    public String descInventory(){
+        String invString = "";
+        for (Item i : inventory){
+            invString += (i.getName() + "\n");
+        }
+        return invString;
     }
 }

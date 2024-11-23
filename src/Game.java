@@ -1,3 +1,6 @@
+
+import java.io.IOException;
+
 /*
  * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
  * Date: 10/14/2024
@@ -20,13 +23,15 @@ public class Game {
     }
 
     //initializes the game
-    private void init() {
+    private void init() throws IOException, ClassNotFoundException {
         int worldSize = World.getInstance().worldSize;
+        Player.getInstance().setDefault();
+        Player.getInstance().loadPlayer();
         Player.getInstance().setCoords(worldSize/2, worldSize/2);
         Display.getInstance().addKeyListener(new Controls());
     }
 
-    public void run() {
+    public void run() throws IOException, ClassNotFoundException {
         init();
 
         //constantly handle events sent by the different objects in the game

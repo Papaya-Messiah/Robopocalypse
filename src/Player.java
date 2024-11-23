@@ -6,9 +6,16 @@
  * Is an eager-instantiation Singleton.
  */
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-public class Player {
+public class Player implements Serializable{
     private static Player instance = new Player();
     private int x_pos;
     private int y_pos;
@@ -23,6 +30,62 @@ public class Player {
     private ArrayList<Item> inventory;
     //constructor
     private Player() {
+    }
+    public void savePlayer(){
+        try {
+            Scanner userInput = new Scanner(System.in);
+            String userChoice;
+            System.out.println("Save Character Y/N");
+            userChoice = userInput.nextLine();
+            if(userChoice.equals("Y") || userChoice.equals("y")){
+                System.out.println("Please Enter File name");
+                String fileName = userInput.nextLine();
+                fileName = fileName + ".txt";
+                FileOutputStream file = new FileOutputStream(fileName);
+                ObjectOutputStream out = new ObjectOutputStream(file);
+                out.writeObject(instance);
+            }
+            userInput.close();
+        } catch (Exception e) {
+            System.out.print("An error is throwing");
+        }
+    }
+    public void loadPlayer(){
+        File f = new File("Character.txt");
+        if(f.exists()){
+            Scanner userInput = new Scanner(System.in);
+            String userChoice;
+            System.out.println("Would you like to load previous character? Y/N");
+            userChoice = userInput.nextLine();
+            if(userChoice.equals("Y") || userChoice.equals("y")){
+                try {
+                    String fileName = userInput.nextLine();
+                    fileName = fileName + ".txt";
+                    FileInputStream file = new FileInputStream(fileName);
+                    ObjectInputStream in = new ObjectInputStream(file);
+                    Player loadedPlayer = (Player)in.readObject();
+                    this.str = loadedPlayer.str;
+                    this.view_distance = loadedPlayer.view_distance;
+                    this.agi = loadedPlayer.agi;
+                    this.def = loadedPlayer.def;
+                    this.con = loadedPlayer.con;
+                    file.close();
+                    in.close();
+                } catch (Exception e) {
+                }
+            }
+            else{
+                System.out.println("Starting with new Character.");
+            }
+            userInput.close();
+        }
+        else{
+            System.out.println("No Previous Player Data Found.");
+            System.out.println("Starting with new character");
+        }
+    
+    }
+    public void setDefault(){
         view_distance = 5;
         this.str = 10;
         this.agi = 10;
@@ -30,7 +93,6 @@ public class Player {
         this.health = con * 4;
         this.def = 10;
     }
-
     public static Player getInstance() {
         return instance;
     }

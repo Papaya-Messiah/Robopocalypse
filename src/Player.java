@@ -33,19 +33,9 @@ public class Player implements Serializable{
     }
     public void savePlayer(){
         try {
-            Scanner userInput = new Scanner(System.in);
-            String userChoice;
-            System.out.println("Save Character Y/N");
-            userChoice = userInput.nextLine();
-            if(userChoice.equals("Y") || userChoice.equals("y")){
-                System.out.println("Please Enter File name");
-                String fileName = userInput.nextLine();
-                fileName = fileName + ".txt";
-                FileOutputStream file = new FileOutputStream(fileName);
-                ObjectOutputStream out = new ObjectOutputStream(file);
-                out.writeObject(instance);
-            }
-            userInput.close();
+            FileOutputStream file = new FileOutputStream("Character.txt");
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(instance);
         } catch (Exception e) {
             System.out.print("An error is throwing");
         }
@@ -59,9 +49,7 @@ public class Player implements Serializable{
             userChoice = userInput.nextLine();
             if(userChoice.equals("Y") || userChoice.equals("y")){
                 try {
-                    String fileName = userInput.nextLine();
-                    fileName = fileName + ".txt";
-                    FileInputStream file = new FileInputStream(fileName);
+                    FileInputStream file = new FileInputStream("Character.txt");
                     ObjectInputStream in = new ObjectInputStream(file);
                     Player loadedPlayer = (Player)in.readObject();
                     this.str = loadedPlayer.str;

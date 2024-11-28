@@ -15,6 +15,9 @@ public class Item
         this.Con = Constitution;
         this.Health = Heal;
     }
+    public String getName(){
+        return itemName;
+    }
     public int getStr(){
         return Str;
     }

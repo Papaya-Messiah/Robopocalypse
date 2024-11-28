@@ -16,19 +16,6 @@ public class Runner {
          * Game.getInstance().run()
          * Game.getInstance().save()
          */
-        //Game.getInstance().run();
-        ItemHub hub = new ItemHub();
-                ArrayList<Item> itemList = new ArrayList<Item>();
-        ItemHub hub = new ItemHub();
-        int count = 1;
-        for(int i = 0; i < 100; i++){
-            itemList.add(hub.generateItem());
-        }
-        for(Item currentItem : itemList){
-            System.out.print(count + " ");
-            currentItem.printItemInfo();
-            count++;
-        }
-
+        Game.getInstance().run();
     }
 }

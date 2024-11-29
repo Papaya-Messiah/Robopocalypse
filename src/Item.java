@@ -1,5 +1,12 @@
-public class Item
-{
+/*
+ * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
+ * Date: 11/20/2024
+ * 
+ * Item base class
+ */
+
+
+public class Item {
     private String itemName;
     private int Str;
     private int Agi;

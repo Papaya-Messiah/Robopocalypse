@@ -23,16 +23,17 @@ public class Game {
     private void init() {
         int worldSize = World.getInstance().worldSize;
         Player.getInstance().setCoords(worldSize/2, worldSize/2);
-        Display.getInstance().addKeyListener(new Controls());
+
+        //adding observers
+        World.getInstance().addObserver(new WorldObserver());
+        Player.getInstance().addObserver(new PlayerObserver());
     }
 
     public void run() {
         init();
 
         //constantly handle events sent by the different objects in the game
-        while (true) {
-            EventHandler.getInstance().handleEvent();
-        }
+        Display.getInstance().addKeyListener(new Controls());
     }
 
 }

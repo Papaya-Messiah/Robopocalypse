@@ -20,6 +20,7 @@ public class Controls implements KeyListener {
         System.out.println("Detected key:" + keyCode);
         //quit when q is pressed
         if (keyCode == Q) {
+            Player.getInstance().savePlayer();
             System.exit(0);
         }
         if (keyCode == W || keyCode == A || keyCode == S || keyCode == D) {

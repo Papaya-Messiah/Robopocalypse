@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Player implements Serializable{
+public class Player implements ISubject,Serializable {
     private static Player instance = new Player();
     private int x_pos;
     private int y_pos;
@@ -28,6 +28,7 @@ public class Player implements Serializable{
     private boolean isDead = false;
     private Cell.CellType currentCellType = Cell.CellType.WALL;
     private ArrayList<Item> inventory;
+    private ArrayList<IObserver> observers = new ArrayList<>();
     //constructor
     private Player() {
     }
@@ -166,8 +167,8 @@ public class Player implements Serializable{
                 }
             }
         }
-        //after updating which cells are visible, update the display for the user
-        Display.getInstance().updateWorldDisplay();
+        //notify the world's observers that there was an update
+        World.getInstance().notifyObservers();
     }
 
     public void addItem(Item i){
@@ -180,5 +181,22 @@ public class Player implements Serializable{
             invString += (i.getName() + "\n");
         }
         return invString;
+    }
+
+    @Override
+    public void addObserver(IObserver o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(IObserver o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver o : observers) {
+            o.update(this);
+        }
     }
 }

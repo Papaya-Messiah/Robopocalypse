@@ -28,16 +28,17 @@ public class Game {
         Player.getInstance().setDefault();
         Player.getInstance().loadPlayer();
         Player.getInstance().setCoords(worldSize/2, worldSize/2);
-        Display.getInstance().addKeyListener(new Controls());
+
+        //adding observers
+        World.getInstance().addObserver(new WorldObserver());
+        Player.getInstance().addObserver(new PlayerObserver());
     }
 
     public void run() throws IOException, ClassNotFoundException {
         init();
 
         //constantly handle events sent by the different objects in the game
-        while (true) {
-            EventHandler.getInstance().handleEvent();
-        }
+        Display.getInstance().addKeyListener(new Controls());
     }
 
 }

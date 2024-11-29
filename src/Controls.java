@@ -31,6 +31,7 @@ public class Controls implements KeyListener {
     public void tryMovement(int keyCode) {
         int posX = Player.getInstance().getX();
         int posY = Player.getInstance().getY();
+        //checking that the player is not about to move into an occupied cell
         if (keyCode == W) {
             if (World.getInstance().getCell(posX, posY-1).getType() != Cell.CellType.WALL) {
                 Player.getInstance().setCoords(posX, posY-1);

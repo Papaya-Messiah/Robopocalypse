@@ -7,12 +7,15 @@
  * Is an eager-instantiation Singleton.
  */
 
-public class World {
+import java.util.ArrayList;
+
+public class World implements ISubject {
     private static World instance = new World();
     //2d grid of the world
     private Cell[][] grid;
     //side length of the square grid
     public int worldSize = 50;
+    private ArrayList<IObserver> observers = new ArrayList<>();
 
     //constructor
     private World() {
@@ -65,8 +68,20 @@ public class World {
         return distance;
     }
 
-    //send an Event to the handler
-    public void sendEvent() {
-        EventHandler.getInstance().queueEvent(new Event(this));
+    @Override
+    public void addObserver(IObserver o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(IObserver o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver o : observers) {
+            o.update(this);
+        }
     }
 }

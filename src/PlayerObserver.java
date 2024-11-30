@@ -11,5 +11,9 @@ public class PlayerObserver implements IObserver {
     public void update(Object o) {
         System.out.println("Player event observed!");
     }
-    
+    public void playerDeath(){
+        System.out.println("Player died.");
+        Player.getInstance().savePlayer();
+        System.exit(0);
+    }
 }

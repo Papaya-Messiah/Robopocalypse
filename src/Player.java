@@ -4,6 +4,7 @@
  * 
  * Broadly defines the player's behavior and statistics. 
  * Is an eager-instantiation Singleton.
+ * Is the receiver of the command pattern implemented by PlayerCommands
  */
 
 import java.io.File;
@@ -30,8 +31,8 @@ public class Player implements ISubject,Serializable {
     private ArrayList<Item> inventory;
     private ArrayList<IObserver> observers = new ArrayList<>();
     //constructor
-    private Player() {
-    }
+    private Player() { }
+
     public void savePlayer(){
         try {
             FileOutputStream file = new FileOutputStream("Character.txt");
@@ -41,6 +42,7 @@ public class Player implements ISubject,Serializable {
             System.out.print("An error is throwing");
         }
     }
+
     public void loadPlayer(){
         File f = new File("Character.txt");
         if(f.exists()){
@@ -73,69 +75,6 @@ public class Player implements ISubject,Serializable {
             System.out.println("Starting with new character");
         }
     
-    }
-    public void setDefault(){
-        view_distance = 5;
-        this.str = 10;
-        this.agi = 10;
-        this.con = 10;
-        this.health = con * 4;
-        this.def = 10;
-    }
-    public static Player getInstance() {
-        return instance;
-    }
-  
-    public int getHealth(){
-        return health;
-    }
-  
-    public void setHealth(int h){
-        this.health = h;
-        if (this.health <= 0){
-            isDead = true;
-        }
-    }
-  
-    public boolean returnDeathFlag(){
-        return isDead;
-    }
-  
-    public int getStr(){
-        return str;
-    }
-  
-    public int getAgi(){
-        return agi;
-    }
-  
-    public int getCon(){
-        return con;
-    }
-  
-    public int getDef(){
-        return def;
-    }
-  
-    public void setDef(int d){
-        this.def = d;
-    }
-    public void setStr(int s){
-        this.str = s;
-    }
-    public void setAgi(int a){
-        this.agi = a;
-    }
-    public void setCon(int c){
-        this.con = c;
-    }
-
-    public int getX() {
-        return x_pos;
-    }
-    
-    public int getY() {
-        return y_pos;
     }
 
     public void setCoords(int x, int y) {
@@ -198,5 +137,71 @@ public class Player implements ISubject,Serializable {
         for (IObserver o : observers) {
             o.update(this);
         }
+    }
+
+    //Boilerplate code
+    public void setDefault(){
+        view_distance = 5;
+        this.str = 10;
+        this.agi = 10;
+        this.con = 10;
+        this.health = con * 4;
+        this.def = 10;
+    }
+    
+    public static Player getInstance() {
+        return instance;
+    }
+  
+    public int getHealth(){
+        return health;
+    }
+  
+    public void setHealth(int h){
+        this.health = h;
+        if (this.health <= 0){
+            isDead = true;
+        }
+    }
+  
+    public boolean returnDeathFlag(){
+        return isDead;
+    }
+  
+    public int getStr(){
+        return str;
+    }
+  
+    public int getAgi(){
+        return agi;
+    }
+  
+    public int getCon(){
+        return con;
+    }
+  
+    public int getDef(){
+        return def;
+    }
+  
+    public void setDef(int d){
+        this.def = d;
+    }
+    public void setStr(int s){
+        this.str = s;
+    }
+    public void setAgi(int a){
+        this.agi = a;
+    }
+    public void setCon(int c){
+        this.con = c;
+    }
+
+    public int getX() {
+        return x_pos;
+    }
+    
+    public int getY() {
+        return y_pos;
     }
 }

@@ -3,9 +3,12 @@
  * Date: 11/12/2024
  * 
  * Controls the actions a player can take by defining the keybinds available
+ * Is the client in the command pattern
  */
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class Controls implements KeyListener {
     private final int Q = 81;
@@ -13,6 +16,22 @@ public class Controls implements KeyListener {
     private final int A = 65;
     private final int S = 83;
     private final int D = 68;
+    private final int E = 69;
+    private final int F = 70;
+    private final int G = 71;
+    private final int C = 87;
+    private final int X = 88;
+    private final int Z = 90;
+    private final int R = 82;
+    private final int H = 72;
+
+    private final HashSet<Integer> moveKeys = new HashSet<>();
+    private final HashSet<Integer> commandKeys = new HashSet<>();
+
+    public Controls() {
+        moveKeys.addAll(Arrays.asList(W, A, S, D));
+        commandKeys.addAll(Arrays.asList(H, E, F, G, C, X, Z, R));
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -23,7 +42,7 @@ public class Controls implements KeyListener {
             Player.getInstance().savePlayer();
             System.exit(0);
         }
-        if (keyCode == W || keyCode == A || keyCode == S || keyCode == D) {
+        if (moveKeys.contains(keyCode)) {
             tryMovement(keyCode);
         }
     }

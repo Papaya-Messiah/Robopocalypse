@@ -29,6 +29,8 @@ public class Game {
         Player.getInstance().loadPlayer();
         Player.getInstance().setCoords(2, 2);
 
+        UI.getInstance().setMsg("Welcome to Robopocalypse!");
+
         //adding observers
         World.getInstance().addObserver(new WorldObserver());
         Player.getInstance().addObserver(new PlayerObserver());
@@ -39,6 +41,11 @@ public class Game {
 
         //constantly handle events sent by the different objects in the game
         Display.getInstance().addKeyListener(new Controls());
+    }
+
+    public void quit() {
+        System.out.println("Quitting...");
+        System.exit(0);
     }
 
 }

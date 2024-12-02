@@ -24,7 +24,6 @@ public class Game {
 
     //initializes the game
     private void init() throws IOException, ClassNotFoundException {
-        int worldSize = World.getInstance().worldSize;
         Player.getInstance().popStats("default");
         Player.getInstance().loadPlayer();
         Player.getInstance().setCoords(2, 2);

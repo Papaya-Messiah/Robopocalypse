@@ -13,22 +13,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Player implements ISubject,Serializable {
+public class Player extends Robot implements ISubject,Serializable {
     private static Player instance = new Player();
-    private int x_pos;
-    private int y_pos;
     private int view_distance;
-    private int str;
-    private int agi;
-    private int def; 
-    private int con;
-    private int health;
-    private boolean isDead = false;
     private Cell.CellType currentCellType = Cell.CellType.WALL;
     private ArrayList<Item> inventory;
     private ArrayList<IObserver> observers = new ArrayList<>();
     //constructor
     private Player() {
+        view_distance = 5;
     }
     public void savePlayer(){
         Scanner userInput = new Scanner(System.in);
@@ -42,13 +35,14 @@ public class Player implements ISubject,Serializable {
                 if(playerObject.createNewFile()){
                     System.out.println("File Created: " + playerObject.getName() );
                     FileWriter playerWriter = new FileWriter(userChoice);
-                    playerWriter.write("Str: " + str + "\n" + "Agi: " + agi + "\n" + "Def: " + def + " \n" + "Con: " + con + "\n");
+                    //playerWriter.write("Str: " + str + "\n" + "Agi: " + agi + "\n" + "Def: " + def + " \n" + "Con: " + con + "\n");
+                    playerWriter.write("Str: " + stats.getStr() + "\n" + "Agi: " + stats.getAgi() + "\n" + "Def: " + stats.getDef() + " \n" + "Con: " + stats.getCon() + "\n");
                     playerWriter.close();
                 }
                 else{
                     System.out.println("Overwriting file");
                     FileWriter playerWriter = new FileWriter(userChoice);
-                    playerWriter.write("Str: " + str + "\n" + "Agi: " + agi + "\n" + "Def: " + def + " \n" + "Con: " + con + "\n");
+                    playerWriter.write("Str: " + stats.getStr() + "\n" + "Agi: " + stats.getAgi() + "\n" + "Def: " + stats.getDef() + " \n" + "Con: " + stats.getCon() + "\n");
                     playerWriter.close();
                 }
             }
@@ -75,17 +69,22 @@ public class Player implements ISubject,Serializable {
                     Scanner txt_Reader = new Scanner(new FileReader(userChoice));
                         String breaker = txt_Reader.next();
                         String statNumString = txt_Reader.next();
-                        this.str = Integer.parseInt(statNumString);
+                        //this.str = Integer.parseInt(statNumString);
+                        stats.setStr(Integer.parseInt(statNumString));
                         breaker = txt_Reader.next();  
                         statNumString = txt_Reader.next();
-                        this.agi = Integer.parseInt(statNumString);
+                        //this.agi = Integer.parseInt(statNumString);
+                        stats.setAgi(Integer.parseInt(statNumString));
                         breaker = txt_Reader.next();
                         statNumString = txt_Reader.next();
-                        this.def = Integer.parseInt(statNumString);
+                        //this.def = Integer.parseInt(statNumString);
+                        stats.setDef(Integer.parseInt(statNumString));
                         breaker = txt_Reader.next();
                         statNumString = txt_Reader.next();
-                        this.con = Integer.parseInt(statNumString);
-                        this.health = con * 4;
+                        //this.con = Integer.parseInt(statNumString);
+                        stats.setCon(Integer.parseInt(statNumString));
+                        //this.health = con * 4;
+                        stats.setHealth(stats.getCon()*4);
                         txt_Reader.close();
                 }
                 else{
@@ -101,68 +100,9 @@ public class Player implements ISubject,Serializable {
             System.out.println("Uh oh");
         }
     }
-    public void setDefault(){
-        view_distance = 5;
-        this.str = 10;
-        this.agi = 10;
-        this.con = 10;
-        this.health = con * 4;
-        this.def = 10;
-    }
+
     public static Player getInstance() {
         return instance;
-    }
-  
-    public int getHealth(){
-        return health;
-    }
-  
-    public void setHealth(int h){
-        this.health = h;
-        if (this.health <= 0){
-            isDead = true;
-        }
-    }
-  
-    public boolean returnDeathFlag(){
-        return isDead;
-    }
-  
-    public int getStr(){
-        return str;
-    }
-  
-    public int getAgi(){
-        return agi;
-    }
-  
-    public int getCon(){
-        return con;
-    }
-  
-    public int getDef(){
-        return def;
-    }
-  
-    public void setDef(int d){
-        this.def = d;
-    }
-    public void setStr(int s){
-        this.str = s;
-    }
-    public void setAgi(int a){
-        this.agi = a;
-    }
-    public void setCon(int c){
-        this.con = c;
-    }
-
-    public int getX() {
-        return x_pos;
-    }
-    
-    public int getY() {
-        return y_pos;
     }
 
     public void setCoords(int x, int y) {
@@ -178,7 +118,7 @@ public class Player implements ISubject,Serializable {
         //temporarily set the occupying cell to the PLAYER type
         World.getInstance().getCell(x, y).setType(Cell.CellType.PLAYER);
         updateVisible();
-    }
+    } 
 
     public void updateVisible() {
         //loop over grid

@@ -1,0 +1,3 @@
+public class BomberAttack implements IAttackStrategy{
+    //WANTS TO GET WITHIN A CERTAIN RANGE OF THE PLAYER AND DETONATE ITSELF TO DO LOTS OF DAMAGE
+}

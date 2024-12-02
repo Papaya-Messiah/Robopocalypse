@@ -25,9 +25,9 @@ public class Game {
     //initializes the game
     private void init() throws IOException, ClassNotFoundException {
         int worldSize = World.getInstance().worldSize;
-        Player.getInstance().setDefault();
-        //Player.getInstance().loadPlayer();
-        Player.getInstance().setCoords(worldSize/2, worldSize/2);
+        Player.getInstance().popStats("default");
+        Player.getInstance().loadPlayer();
+        Player.getInstance().setCoords(2, 2);
 
         UI.getInstance().setMsg("Welcome to Robopocalypse!");
 

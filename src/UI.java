@@ -40,7 +40,9 @@ public class UI {
     }
 
     public String getStats() {
-        return stats;
+        String temp = "";
+        temp += "Stats:\nStr:\t" + Player.getInstance().stats.getStr() + "\nAgi:\t" + Player.getInstance().stats.getAgi() + " \nDef:\t" + Player.getInstance().stats.getDef() + " \nCon:\t" + Player.getInstance().stats.getCon();
+        return temp;
     }
 
     public String getInv() {

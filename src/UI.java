@@ -24,12 +24,15 @@ public class UI {
     }
     public void setStats(String s) {
         stats = s;
+        Display.getInstance().updateStatsDisplay();
     }
     public void setInv(String i) {
         inv = i;
+        Display.getInstance().updateInventoryDisplay();
     }
     public void setControls(String c) {
         controls = c;
+        Display.getInstance().updateControlsDisplay();
     }
 
     public String getMsg() {

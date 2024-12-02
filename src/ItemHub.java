@@ -1,7 +1,14 @@
-import java.util.Scanner;
-import java.io.FileReader;
+/*
+ * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
+ * Date: 10/14/2024
+ * 
+ * This class is used to read data from the item database text document and send
+ * said data to the item factory to then generate an item for the player.
+ */
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Random;
+import java.util.Scanner;
 
 public class ItemHub
 {

@@ -8,10 +8,8 @@
  */
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -34,6 +32,33 @@ public class Player implements ISubject,Serializable {
     private Player() { }
 
     public void savePlayer(){
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Would you like to save? (Y/N)");
+        String userChoice = userInput.nextLine();
+        if(userChoice.equals("Y") || userChoice.equals("y")){
+            try{
+                System.out.println("Please enter a save name: ");
+                userChoice = userInput.nextLine();
+                File playerObject = new File(userChoice);
+                if(playerObject.createNewFile()){
+                    System.out.println("File Created: " + playerObject.getName() );
+                    FileWriter playerWriter = new FileWriter(userChoice);
+                    playerWriter.write("Str: " + str + "\n" + "Agi: " + agi + "\n" + "Def: " + def + " \n" + "Con: " + con + "\n");
+                    playerWriter.close();
+                }
+                else{
+                    System.out.println("Overwriting file");
+                    FileWriter playerWriter = new FileWriter(userChoice);
+                    playerWriter.write("Str: " + str + "\n" + "Agi: " + agi + "\n" + "Def: " + def + " \n" + "Con: " + con + "\n");
+                    playerWriter.close();
+                }
+            }
+            catch(Exception e){
+                System.out.println("An error occured");
+            }
+        }
+        else{
+            System.out.println("Not saving. Goodbye");
         try {
             FileOutputStream file = new FileOutputStream("Character.txt");
             ObjectOutputStream out = new ObjectOutputStream(file);
@@ -42,40 +67,48 @@ public class Player implements ISubject,Serializable {
         } catch (Exception e) {
             System.out.print("An error is throwing");
         }
+        userInput.close();
     }
 
     public void loadPlayer(){
-        File f = new File("Character.txt");
-        if(f.exists()){
+        try{
             Scanner userInput = new Scanner(System.in);
-            String userChoice;
-            System.out.println("Would you like to load previous character? Y/N");
-            userChoice = userInput.nextLine();
+            System.out.println("Load Character? (Y/N)");
+            String userChoice = userInput.nextLine();
             if(userChoice.equals("Y") || userChoice.equals("y")){
-                try {
-                    FileInputStream file = new FileInputStream("Character.txt");
-                    ObjectInputStream in = new ObjectInputStream(file);
-                    Player loadedPlayer = (Player)in.readObject();
-                    this.str = loadedPlayer.str;
-                    this.view_distance = loadedPlayer.view_distance;
-                    this.agi = loadedPlayer.agi;
-                    this.def = loadedPlayer.def;
-                    this.con = loadedPlayer.con;
-                    file.close();
-                    in.close();
-                } catch (Exception e) {
+                System.out.println("Enter Save name: ");
+                userChoice = userInput.nextLine();
+                File f = new File(userChoice);
+                if (f.exists()) {
+                    System.out.println("Loading character");
+                    Scanner txt_Reader = new Scanner(new FileReader(userChoice));
+                        String breaker = txt_Reader.next();
+                        String statNumString = txt_Reader.next();
+                        this.str = Integer.parseInt(statNumString);
+                        breaker = txt_Reader.next();  
+                        statNumString = txt_Reader.next();
+                        this.agi = Integer.parseInt(statNumString);
+                        breaker = txt_Reader.next();
+                        statNumString = txt_Reader.next();
+                        this.def = Integer.parseInt(statNumString);
+                        breaker = txt_Reader.next();
+                        statNumString = txt_Reader.next();
+                        this.con = Integer.parseInt(statNumString);
+                        this.health = con * 4;
+                        txt_Reader.close();
                 }
-            }
+                else{
+                    System.out.println("No save found");
+                    System.out.println("Default Character generated");
+                }
+                }
             else{
                 System.out.println("Starting with new Character.");
             }
-            userInput.close();
         }
-        else{
-            System.out.println("No Previous Player Data Found.");
-            System.out.println("Starting with new character");
+        catch(Exception e){
+            System.out.println("Uh oh");
         }
-    
     }
 
     public void setCoords(int x, int y) {

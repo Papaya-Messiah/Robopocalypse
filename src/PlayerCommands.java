@@ -13,6 +13,7 @@ public class PlayerCommands {
 
     public PlayerCommands() {
         list.put("help", new HelpCommand());
+        list.put("inspect", new InspectCommand());
     }
 
     interface Command {
@@ -29,7 +30,7 @@ public class PlayerCommands {
     public class InspectCommand implements Command {
         @Override
         public void execute() {
-
+            Player.getInstance().inspect();
         }
     }
 

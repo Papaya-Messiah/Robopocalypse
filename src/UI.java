@@ -7,6 +7,10 @@
 
 public class UI {
     private static UI instance = new UI();
+    private String msg;
+    private String stats;
+    private String inv;
+    private String controls;
 
     private UI() {}
 
@@ -14,10 +18,25 @@ public class UI {
         return instance;
     }
 
+    public void setMsg(String m) {
+        msg = m;
+        Display.getInstance().updateMessageDisplay();
+    }
+    public void setStats(String s) {
+        stats = s;
+        Display.getInstance().updateStatsDisplay();
+    }
+    public void setInv(String i) {
+        inv = i;
+        Display.getInstance().updateInventoryDisplay();
+    }
+    public void setControls(String c) {
+        controls = c;
+        Display.getInstance().updateControlsDisplay();
+    }
+
     public String getMsg() {
-        String temp = "";
-        temp += "Message Placeholder";
-        return temp;
+        return msg;
     }
 
     public String getStats() {
@@ -27,14 +46,10 @@ public class UI {
     }
 
     public String getInv() {
-        String temp = "";
-        temp += "Inventory Placeholder";
-        return temp;
+        return inv;
     }
 
     public String getControls() {
-        String temp = "";
-        temp += "Controls Placeholder";
-        return temp;
+        return controls;
     }
 }

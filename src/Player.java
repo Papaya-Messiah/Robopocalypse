@@ -4,6 +4,7 @@
  * 
  * Broadly defines the player's behavior and statistics. 
  * Is an eager-instantiation Singleton.
+ * Is the receiver of the command pattern implemented by PlayerCommands
  */
 
 import java.io.File;
@@ -16,6 +17,7 @@ import java.util.Scanner;
 public class Player extends Robot implements ISubject,Serializable {
     private static Player instance = new Player();
     private int view_distance;
+    private Direction facing = Direction.SOUTH; //faces south by default
     private Cell.CellType currentCellType = Cell.CellType.WALL;
     private ArrayList<Item> inventory;
     private ArrayList<IObserver> observers = new ArrayList<>();
@@ -27,7 +29,7 @@ public class Player extends Robot implements ISubject,Serializable {
         Scanner userInput = new Scanner(System.in);
         System.out.println("Would you like to save? (Y/N)");
         String userChoice = userInput.nextLine();
-        if(userChoice.equals("Y") || userChoice.equals("y")){
+        if(userChoice.toLowerCase().equals("y")){
             try{
                 System.out.println("Please enter a save name: ");
                 userChoice = userInput.nextLine();
@@ -50,11 +52,12 @@ public class Player extends Robot implements ISubject,Serializable {
                 System.out.println("An error occured");
             }
         }
-        else{
+        else {
             System.out.println("Not saving. Goodbye");
         }
         userInput.close();
     }
+
     public void loadPlayer(){
         try{
             Scanner userInput = new Scanner(System.in);
@@ -91,10 +94,11 @@ public class Player extends Robot implements ISubject,Serializable {
                     System.out.println("No save found");
                     System.out.println("Default Character generated");
                 }
-                }
-            else{
-                System.out.println("Default Character generated");
             }
+            else{
+                System.out.println("Starting with new Character.");
+            }
+            userInput.close();
         }
         catch(Exception e){
             System.out.println("Uh oh");
@@ -104,6 +108,29 @@ public class Player extends Robot implements ISubject,Serializable {
     public static Player getInstance() {
         return instance;
     }
+  
+    public void setFacing(Direction d) {
+        facing = d;
+    }
+
+    public Cell getFacingCell() {
+        switch (facing) {
+            case NORTH:
+                return World.getInstance().getCell(x_pos, y_pos-1);
+            case SOUTH:
+                return World.getInstance().getCell(x_pos, y_pos+1);
+            case EAST:
+                return World.getInstance().getCell(x_pos+1, y_pos);
+            case WEST:
+                return World.getInstance().getCell(x_pos-1, y_pos);
+            default:
+                return null;
+        }
+    }
+
+    public void inspect() {
+        UI.getInstance().setMsg("In front of you stands a(n) " + getFacingCell().getType().toString().toLowerCase());
+    }
 
     public void setCoords(int x, int y) {
         //set the current cell type back to what it was before the player moves away
@@ -112,8 +139,15 @@ public class Player extends Robot implements ISubject,Serializable {
         x_pos = x;
         y_pos = y;
 
-        //update the current celltype
+        //get and update the current celltype
         currentCellType = World.getInstance().getCell(x, y).getType();
+
+        //if player has moved into an item, pick it up
+        if (currentCellType == Cell.CellType.ITEM) {
+            this.addItem(ItemHub.getInstance().generateItem());
+            //empty the cell of the item
+            currentCellType = Cell.CellType.EMPTY;
+        }
 
         //temporarily set the occupying cell to the PLAYER type
         World.getInstance().getCell(x, y).setType(Cell.CellType.PLAYER);
@@ -165,5 +199,73 @@ public class Player extends Robot implements ISubject,Serializable {
         for (IObserver o : observers) {
             o.update(this);
         }
+    }
+
+    //Boilerplate code
+    public void setDefault(){
+        view_distance = 5;
+        this.str = 10;
+        this.agi = 10;
+        this.con = 10;
+        this.health = con * 4;
+        this.def = 10;
+    }
+    
+    public static Player getInstance() {
+        return instance;
+    }
+  
+    public int getHealth(){
+        return health;
+    }
+  
+    public void setHealth(int h){
+        this.health = h;
+        if (this.health <= 0){
+            this.deadPlayer();
+        }
+    }
+  
+    public void deadPlayer(){
+        for(IObserver o : observers){
+            o.death();
+        }
+    }
+  
+    public int getStr(){
+        return str;
+    }
+  
+    public int getAgi(){
+        return agi;
+    }
+  
+    public int getCon(){
+        return con;
+    }
+  
+    public int getDef(){
+        return def;
+    }
+  
+    public void setDef(int d){
+        this.def = d;
+    }
+    public void setStr(int s){
+        this.str = s;
+    }
+    public void setAgi(int a){
+        this.agi = a;
+    }
+    public void setCon(int c){
+        this.con = c;
+    }
+
+    public int getX() {
+        return x_pos;
+    }
+    
+    public int getY() {
+        return y_pos;
     }
 }

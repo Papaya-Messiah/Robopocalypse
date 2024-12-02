@@ -3,9 +3,12 @@
  * Date: 11/12/2024
  * 
  * Controls the actions a player can take by defining the keybinds available
+ * Is the client in the command pattern
  */
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class Controls implements KeyListener {
     private final int Q = 81;
@@ -13,6 +16,25 @@ public class Controls implements KeyListener {
     private final int A = 65;
     private final int S = 83;
     private final int D = 68;
+    private final int E = 69;
+    private final int F = 70;
+    private final int G = 71;
+    private final int C = 87;
+    private final int X = 88;
+    private final int Z = 90;
+    private final int R = 82;
+    private final int H = 72;
+
+    private HashSet<Integer> moveKeys = new HashSet<>();
+    private HashSet<Integer> commandKeys = new HashSet<>();
+
+    private PlayerCommands commands = new PlayerCommands();
+
+    public Controls() {
+        moveKeys.addAll(Arrays.asList(W, A, S, D));
+        commandKeys.addAll(Arrays.asList(H, E, F, G, C, X, Z, R));
+        UI.getInstance().setControls("Move:\t\tWASD\nInspect:\tE\nHelp:\t\tH\nQuit:\t\tQ");
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -20,17 +42,45 @@ public class Controls implements KeyListener {
         System.out.println("Detected key:" + keyCode);
         //quit when q is pressed
         if (keyCode == Q) {
-            Player.getInstance().savePlayer();
-            System.exit(0);
+            Game.getInstance().quit();
         }
-        if (keyCode == W || keyCode == A || keyCode == S || keyCode == D) {
+        //movement keys
+        if (moveKeys.contains(keyCode)) {
             tryMovement(keyCode);
+        }
+        //action keybinds
+        else if (commandKeys.contains(keyCode)) {
+            doCommand(keyCode);
+        }
+        else {
+            System.out.println("Pressed key does not do anything.");
+        }
+    }
+
+    public void doCommand(int keyCode) {
+        switch (keyCode) {
+            case H:
+                commands.list.get("help").execute();
+                break;
+            case E:
+                commands.list.get("inspect").execute();
+                break;
         }
     }
 
     public void tryMovement(int keyCode) {
         int posX = Player.getInstance().getX();
         int posY = Player.getInstance().getY();
+        //updating the direction the player is facing
+        if (keyCode == W) {
+            Player.getInstance().setFacing(Direction.NORTH);
+        } else if (keyCode == A) {
+            Player.getInstance().setFacing(Direction.WEST);
+        } else if (keyCode == S) {
+            Player.getInstance().setFacing(Direction.SOUTH);
+        } else if (keyCode == D) {
+            Player.getInstance().setFacing(Direction.EAST);
+        }
         //checking that the player is not about to move into an occupied cell
         if (keyCode == W) {
             if (World.getInstance().getCell(posX, posY-1).getType() != Cell.CellType.WALL) {

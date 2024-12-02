@@ -11,5 +11,7 @@ public class WorldObserver implements IObserver {
     public void update(Object o) {
         Display.getInstance().updateWorldDisplay();
     }
-    
+    public void death(){
+        //this does nothing.
+    }
 }

@@ -1,3 +1,9 @@
+/*
+ * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
+ * Date: 11/28/2024
+ * 
+ * An implementation of the Factory Design that generates items.
+ */
 public class ItemFactory
 {
     public ItemFactory()

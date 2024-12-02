@@ -12,13 +12,20 @@ import java.util.Scanner;
 
 public class ItemHub
 {
+    private static ItemHub instance;
     private ItemFactory fact = new ItemFactory();
     private Random d10 = new Random(); //used for determining item number.
     private Random d100 = new Random(); //used for determining item rarity.
     
-    public ItemHub()
-    {
+    private ItemHub() { }
+
+    public static ItemHub getInstance() {
+        if (instance == null) {
+            instance = new ItemHub();
+        }
+        return instance;
     }
+
     public Item generateItem(){
         Item genItem = null;
         try{

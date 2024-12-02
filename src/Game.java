@@ -26,7 +26,7 @@ public class Game {
     private void init() throws IOException, ClassNotFoundException {
         int worldSize = World.getInstance().worldSize;
         Player.getInstance().setDefault();
-        Player.getInstance().loadPlayer();
+        //Player.getInstance().loadPlayer();
         Player.getInstance().setCoords(worldSize/2, worldSize/2);
 
         //adding observers
@@ -39,6 +39,11 @@ public class Game {
 
         //constantly handle events sent by the different objects in the game
         Display.getInstance().addKeyListener(new Controls());
+    }
+
+    public void quit() {
+        System.out.println("Quitting...");
+        System.exit(0);
     }
 
 }

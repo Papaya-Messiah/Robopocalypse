@@ -38,6 +38,7 @@ public class Player implements ISubject,Serializable {
             FileOutputStream file = new FileOutputStream("Character.txt");
             ObjectOutputStream out = new ObjectOutputStream(file);
             out.writeObject(instance);
+            out.close();
         } catch (Exception e) {
             System.out.print("An error is throwing");
         }

@@ -3,73 +3,51 @@
  * Date: 11/30/2024
  * 
  * Hold a list of possible commands the player can execute
+ * This is the invoker part of the command pattern
  */
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PlayerCommands {
-    //reference to the command receiver
-    private Player player = Player.getInstance();
-    private ArrayList<Command> commands = new ArrayList<>();
+    public HashMap<String, Command> list = new HashMap<>();
 
     public PlayerCommands() {
-        commands.add(new HelpCommand());
+        list.put("help", new HelpCommand());
     }
 
-    abstract class Command {
-        public String name;
-        public abstract void execute();
+    interface Command {
+        public void execute();
     }
 
-    public class HelpCommand extends Command {
-        public HelpCommand() {
-            name = "Help";
-        }
-
+    public class HelpCommand implements Command {
         @Override
         public void execute() {
-            
+            UI.getInstance().setMsg("Help command output.");
         }
     }
 
-    public class InspectCommand extends Command {
-        public InspectCommand() {
-            name = "Inspect";
-        }
-
+    public class InspectCommand implements Command {
         @Override
         public void execute() {
 
         }
     }
 
-    public class AttackCommand extends Command {
-        public AttackCommand() {
-            name = "Attack";
-        }
-
+    public class AttackCommand implements Command {
         @Override
         public void execute() {
 
         }
     }
 
-    public class PickupCommand extends Command {
-        public PickupCommand() {
-            name = "Pickup";
-        }
-
+    public class PickupCommand implements Command {
         @Override
         public void execute() {
 
         }
     }
 
-    public class EquipCommand extends Command {
-        public EquipCommand() {
-            name = "Equip";
-        }
-
+    public class EquipCommand implements Command {
         @Override
         public void execute() {
 

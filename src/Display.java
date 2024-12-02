@@ -118,4 +118,16 @@ public class Display extends Frame {
     public void updateMessageDisplay() {
         msgDisplay.setText(UI.getInstance().getMsg());
     }
+
+    public void updateControlsDisplay() {
+        controlDisplay.setText(UI.getInstance().getControls());
+    }
+
+    public void updateInventoryDisplay() {
+        invDisplay.setText(UI.getInstance().getInv());
+    }
+
+    public void updateStatsDisplay() {
+        statDisplay.setText(UI.getInstance().getStats());
+    }
 }

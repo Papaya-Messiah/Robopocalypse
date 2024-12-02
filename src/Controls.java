@@ -33,6 +33,7 @@ public class Controls implements KeyListener {
     public Controls() {
         moveKeys.addAll(Arrays.asList(W, A, S, D));
         commandKeys.addAll(Arrays.asList(H, E, F, G, C, X, Z, R));
+        UI.getInstance().setControls("Move:\t\tWASD\nInspect:\tE\nHelp:\t\tH\nQuit:\t\tQ");
     }
 
     @Override

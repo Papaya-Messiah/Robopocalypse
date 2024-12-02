@@ -8,10 +8,8 @@
  */
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,6 +18,7 @@ public class Player implements ISubject,Serializable {
     private static Player instance = new Player();
     private int x_pos;
     private int y_pos;
+    private Direction facing = Direction.SOUTH; //faces south by default
     private int view_distance;
     private int str;
     private int agi;
@@ -36,7 +35,7 @@ public class Player implements ISubject,Serializable {
         Scanner userInput = new Scanner(System.in);
         System.out.println("Would you like to save? (Y/N)");
         String userChoice = userInput.nextLine();
-        if(userChoice.equals("Y") || userChoice.equals("y")){
+        if(userChoice.toLowerCase().equals("y")){
             try{
                 System.out.println("Please enter a save name: ");
                 userChoice = userInput.nextLine();
@@ -60,14 +59,6 @@ public class Player implements ISubject,Serializable {
         }
         else {
             System.out.println("Not saving. Goodbye");
-        }
-        try {
-            FileOutputStream file = new FileOutputStream("Character.txt");
-            ObjectOutputStream out = new ObjectOutputStream(file);
-            out.writeObject(instance);
-            out.close();
-        } catch (Exception e) {
-            System.out.print("An error is throwing");
         }
         userInput.close();
     }
@@ -103,14 +94,38 @@ public class Player implements ISubject,Serializable {
                     System.out.println("No save found");
                     System.out.println("Default Character generated");
                 }
-                }
+            }
             else{
                 System.out.println("Starting with new Character.");
             }
+            userInput.close();
         }
         catch(Exception e){
             System.out.println("Uh oh");
         }
+    }
+
+    public void setFacing(Direction d) {
+        facing = d;
+    }
+
+    public Cell getFacingCell() {
+        switch (facing) {
+            case NORTH:
+                return World.getInstance().getCell(x_pos, y_pos-1);
+            case SOUTH:
+                return World.getInstance().getCell(x_pos, y_pos+1);
+            case EAST:
+                return World.getInstance().getCell(x_pos+1, y_pos);
+            case WEST:
+                return World.getInstance().getCell(x_pos-1, y_pos);
+            default:
+                return null;
+        }
+    }
+
+    public void inspect() {
+        UI.getInstance().setMsg("In front of you stands a(n) " + getFacingCell().getType().toString().toLowerCase());
     }
 
     public void setCoords(int x, int y) {
@@ -120,8 +135,15 @@ public class Player implements ISubject,Serializable {
         x_pos = x;
         y_pos = y;
 
-        //update the current celltype
+        //get and update the current celltype
         currentCellType = World.getInstance().getCell(x, y).getType();
+
+        //if player has moved into an item, pick it up
+        if (currentCellType == Cell.CellType.ITEM) {
+            this.addItem(ItemHub.getInstance().generateItem());
+            //empty the cell of the item
+            currentCellType = Cell.CellType.EMPTY;
+        }
 
         //temporarily set the occupying cell to the PLAYER type
         World.getInstance().getCell(x, y).setType(Cell.CellType.PLAYER);
@@ -204,8 +226,6 @@ public class Player implements ISubject,Serializable {
         for(IObserver o : observers){
             o.death();
         }
-
-
     }
   
     public int getStr(){

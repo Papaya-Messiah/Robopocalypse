@@ -29,6 +29,8 @@ public class Game {
         //Player.getInstance().loadPlayer();
         Player.getInstance().setCoords(worldSize/2, worldSize/2);
 
+        UI.getInstance().setMsg("Welcome to Robopocalypse!");
+
         //adding observers
         World.getInstance().addObserver(new WorldObserver());
         Player.getInstance().addObserver(new PlayerObserver());

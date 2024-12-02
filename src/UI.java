@@ -22,7 +22,7 @@ public class UI {
 
     public String getStats() {
         String temp = "";
-        temp += "Stats:\nStr:\t" + Player.getInstance().getStr() + "\nAgi:\t" + Player.getInstance().getAgi() + " \nDef:\t" + Player.getInstance().getDef();
+        temp += "Stats:\nStr:\t" + Player.getInstance().stats.getStr() + "\nAgi:\t" + Player.getInstance().stats.getAgi() + " \nDef:\t" + Player.getInstance().stats.getDef() + " \nCon:\t" + Player.getInstance().stats.getCon();
         return temp;
     }
 

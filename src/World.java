@@ -19,7 +19,7 @@ public class World implements ISubject {
 
     //constructor
     private World() {
-        grid = new Cell[worldSize][worldSize];
+        /*grid = new Cell[worldSize][worldSize];
 
         //initializing cells to hold a value
         for (int i = 0; i < worldSize; i++) {
@@ -34,7 +34,11 @@ public class World implements ISubject {
                     grid[i][j] = new Cell(Cell.CellType.EMPTY);
                 }
             }
-        }
+        } */
+
+        Stage stage = new Stage();
+        stage.popGrid();
+        grid = stage.getGrid();
     }
 
     public static World getInstance() {

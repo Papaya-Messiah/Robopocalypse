@@ -26,7 +26,6 @@ public class Player implements ISubject,Serializable {
     private int def; 
     private int con;
     private int health;
-    private boolean isDead = false;
     private Cell.CellType currentCellType = Cell.CellType.WALL;
     private ArrayList<Item> inventory;
     private ArrayList<IObserver> observers = new ArrayList<>();
@@ -197,12 +196,16 @@ public class Player implements ISubject,Serializable {
     public void setHealth(int h){
         this.health = h;
         if (this.health <= 0){
-            isDead = true;
+            this.deadPlayer();
         }
     }
   
-    public boolean returnDeathFlag(){
-        return isDead;
+    public void deadPlayer(){
+        for(IObserver o : observers){
+            o.death();
+        }
+
+
     }
   
     public int getStr(){

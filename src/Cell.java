@@ -11,6 +11,9 @@ public class Cell {
     private CellType type;
     private boolean visible;
 
+    //reference to the object of the cell
+    private Object occupant;
+
     //parameterized constructor
     public Cell(CellType t) {
         type = t;
@@ -23,6 +26,14 @@ public class Cell {
 
     public CellType getType() {
         return type;
+    }
+
+    public void setOccupant(Object o) {
+        occupant = o;
+    }
+
+    public Object getOccupant() {
+        return occupant;
     }
 
     //returns a single ASCII character representation of the type of cell
@@ -40,7 +51,7 @@ public class Cell {
                 case WALL:
                     return "██";
                 default:
-                    return "ERROR";
+                    return "ER";
             }
         }
         else { return "  "; }

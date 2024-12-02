@@ -25,8 +25,10 @@ public class Controls implements KeyListener {
     private final int R = 82;
     private final int H = 72;
 
-    private final HashSet<Integer> moveKeys = new HashSet<>();
-    private final HashSet<Integer> commandKeys = new HashSet<>();
+    private HashSet<Integer> moveKeys = new HashSet<>();
+    private HashSet<Integer> commandKeys = new HashSet<>();
+
+    private PlayerCommands commands = new PlayerCommands();
 
     public Controls() {
         moveKeys.addAll(Arrays.asList(W, A, S, D));
@@ -42,8 +44,24 @@ public class Controls implements KeyListener {
             Player.getInstance().savePlayer();
             System.exit(0);
         }
+        //movement keys
         if (moveKeys.contains(keyCode)) {
             tryMovement(keyCode);
+        }
+        //action keybinds
+        else if (commandKeys.contains(keyCode)) {
+            doCommand(keyCode);
+        }
+        else {
+            System.out.println("Pressed key does not do anything.");
+        }
+    }
+
+    public void doCommand(int keyCode) {
+        switch (keyCode) {
+            case H:
+                commands.list.get("help").execute();
+                break;
         }
     }
 

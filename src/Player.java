@@ -4,6 +4,7 @@
  * 
  * Broadly defines the player's behavior and statistics. 
  * Is an eager-instantiation Singleton.
+ * Is the receiver of the command pattern implemented by PlayerCommands
  */
 
 import java.io.File;
@@ -28,8 +29,8 @@ public class Player implements ISubject,Serializable {
     private ArrayList<Item> inventory;
     private ArrayList<IObserver> observers = new ArrayList<>();
     //constructor
-    private Player() {
-    }
+    private Player() { }
+
     public void savePlayer(){
         Scanner userInput = new Scanner(System.in);
         System.out.println("Would you like to save? (Y/N)");
@@ -58,9 +59,17 @@ public class Player implements ISubject,Serializable {
         }
         else{
             System.out.println("Not saving. Goodbye");
+        try {
+            FileOutputStream file = new FileOutputStream("Character.txt");
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(instance);
+            out.close();
+        } catch (Exception e) {
+            System.out.print("An error is throwing");
         }
         userInput.close();
     }
+
     public void loadPlayer(){
         try{
             Scanner userInput = new Scanner(System.in);
@@ -94,75 +103,12 @@ public class Player implements ISubject,Serializable {
                 }
                 }
             else{
-                System.out.println("Default Character generated");
+                System.out.println("Starting with new Character.");
             }
         }
         catch(Exception e){
             System.out.println("Uh oh");
         }
-    }
-    public void setDefault(){
-        view_distance = 5;
-        this.str = 10;
-        this.agi = 10;
-        this.con = 10;
-        this.health = con * 4;
-        this.def = 10;
-    }
-    public static Player getInstance() {
-        return instance;
-    }
-  
-    public int getHealth(){
-        return health;
-    }
-  
-    public void setHealth(int h){
-        this.health = h;
-        if (this.health <= 0){
-            isDead = true;
-        }
-    }
-  
-    public boolean returnDeathFlag(){
-        return isDead;
-    }
-  
-    public int getStr(){
-        return str;
-    }
-  
-    public int getAgi(){
-        return agi;
-    }
-  
-    public int getCon(){
-        return con;
-    }
-  
-    public int getDef(){
-        return def;
-    }
-  
-    public void setDef(int d){
-        this.def = d;
-    }
-    public void setStr(int s){
-        this.str = s;
-    }
-    public void setAgi(int a){
-        this.agi = a;
-    }
-    public void setCon(int c){
-        this.con = c;
-    }
-
-    public int getX() {
-        return x_pos;
-    }
-    
-    public int getY() {
-        return y_pos;
     }
 
     public void setCoords(int x, int y) {
@@ -225,5 +171,71 @@ public class Player implements ISubject,Serializable {
         for (IObserver o : observers) {
             o.update(this);
         }
+    }
+
+    //Boilerplate code
+    public void setDefault(){
+        view_distance = 5;
+        this.str = 10;
+        this.agi = 10;
+        this.con = 10;
+        this.health = con * 4;
+        this.def = 10;
+    }
+    
+    public static Player getInstance() {
+        return instance;
+    }
+  
+    public int getHealth(){
+        return health;
+    }
+  
+    public void setHealth(int h){
+        this.health = h;
+        if (this.health <= 0){
+            isDead = true;
+        }
+    }
+  
+    public boolean returnDeathFlag(){
+        return isDead;
+    }
+  
+    public int getStr(){
+        return str;
+    }
+  
+    public int getAgi(){
+        return agi;
+    }
+  
+    public int getCon(){
+        return con;
+    }
+  
+    public int getDef(){
+        return def;
+    }
+  
+    public void setDef(int d){
+        this.def = d;
+    }
+    public void setStr(int s){
+        this.str = s;
+    }
+    public void setAgi(int a){
+        this.agi = a;
+    }
+    public void setCon(int c){
+        this.con = c;
+    }
+
+    public int getX() {
+        return x_pos;
+    }
+    
+    public int getY() {
+        return y_pos;
     }
 }

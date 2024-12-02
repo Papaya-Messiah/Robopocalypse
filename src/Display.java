@@ -3,6 +3,7 @@
  * Date: 11/12/2024
  * 
  * Class in charge of displaying everything
+ * This is one of the receivers in the command pattern
  */
 
 import java.awt.Color;
@@ -112,5 +113,9 @@ public class Display extends Frame {
     //update the worldDisplay with the most recent toString representaation
     public void updateWorldDisplay() {
         worldDisplay.setText(World.getInstance().toString());
+    }
+
+    public void updateMessageDisplay() {
+        msgDisplay.setText(UI.getInstance().getMsg());
     }
 }

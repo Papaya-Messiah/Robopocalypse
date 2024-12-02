@@ -41,8 +41,7 @@ public class Controls implements KeyListener {
         System.out.println("Detected key:" + keyCode);
         //quit when q is pressed
         if (keyCode == Q) {
-            Player.getInstance().savePlayer();
-            System.exit(0);
+            Game.getInstance().quit();
         }
         //movement keys
         if (moveKeys.contains(keyCode)) {
@@ -62,12 +61,25 @@ public class Controls implements KeyListener {
             case H:
                 commands.list.get("help").execute();
                 break;
+            case E:
+                commands.list.get("inspect").execute();
+                break;
         }
     }
 
     public void tryMovement(int keyCode) {
         int posX = Player.getInstance().getX();
         int posY = Player.getInstance().getY();
+        //updating the direction the player is facing
+        if (keyCode == W) {
+            Player.getInstance().setFacing(Direction.NORTH);
+        } else if (keyCode == A) {
+            Player.getInstance().setFacing(Direction.WEST);
+        } else if (keyCode == S) {
+            Player.getInstance().setFacing(Direction.SOUTH);
+        } else if (keyCode == D) {
+            Player.getInstance().setFacing(Direction.EAST);
+        }
         //checking that the player is not about to move into an occupied cell
         if (keyCode == W) {
             if (World.getInstance().getCell(posX, posY-1).getType() != Cell.CellType.WALL) {

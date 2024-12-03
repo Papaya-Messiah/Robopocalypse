@@ -1,33 +1,13 @@
-Common
-1. Health_Potion Str 0 Agi 0 Def 0 Con 0 Health 10 END
-2. Sword Str 10 Agi 0 Def 0 Con 0 Health 0 END
-3. Boots Str 0 Agi 10 Def 0 Con 0 Health 0 END
-4. Shield Str 0 Agi 0 Def 10 Con 0 Health 0 END
-5. Ram_Upgrade Str 0 Agi 0 Def 0 Con 10 Health 0 END
-6. Ion_Pistol Str 5 Agi 5 Def 0 Con 0 Health 0 END
-7. Iron_Plating Str 0 Agi 0 Def 5 Con 5 Health 0 END
-8. Key Str 0 Agi 0 Def 0 Con 0 Health 0 END
-9. Tech_Boots Str 0 Agi 5 Def 5 Con 0 Health 0 END
-10. Laser_Pistol Str 15 Agi 0 Def 0 Con 0 Health 0 END
-Rare
-1. Medium_Health_Potion Str 0 Agi 0 Def 0 Con 0 Health 25 END
-2. Clown_Hammer Str 25 Agi 0 Def 0 Con 0 Health 0 END
-3. Super_Squirt_Gun Str 15 Agi 10 Def 0 Con 0 Health 0 END
-4. Ionic_Boots Str 0 Agi 25 Def 0 Con 0 Health 0 END
-5. Titanium_Plating Str 0 Agi 0 Def 15 Con 10 Health 0 END
-6. 32gB_Ram_Upgrade Str 0 Agi 0 Def 0 Con 25 Health 0 END
-7. Alloy_Plating Str 0 Agi 10 Def 15 Con 0 Health 0 END
-8. Big_Clown_Gloves Str 10 Agi 15 Def 0 Con 0 Health 0 END
-9. A_Really_Big_Shield Str 0 Agi 0 Def 25 Con 0 Health 0 END
-10. Turbo_Boots Str 0 Agi 30 Def 0 Con 0 Health 0 END
-Legendary
-1. Super_Health_Potion Str 0 Agi 0 Def 0 Con 0 Health 50 END
-2. The_Big_Honkin_Hammer Str 50 Agi 0 Def 0 Con 0 Health 0 END
-3. Hyper_Water_Flower Str 25 Agi 25 Def 0 Con 0 Health 0 END
-4. Big_Red_Clown_Shoes Str 0 Agi 50 Def 0 Con 0 Health 0 END
-5. Stolen_Clown_Car_Wheels Str 0 Agi 100 Def 0 Con 0 Health 0 END
-6. A_Stolen_Rollercoaster_Rail Str 100 Agi 0 Def 0 Con 0 Health 0 END
-7. Clowntanium_Armor Str 0 Agi 0 Def 100 Con 0 Health 0 END
-8. 1_TeraByte_Zip Str 0 Agi 0 Def 0 Con 100 Health 0 END
-9. Ion_Cannon Str 60 Agi 10 Def 0 Con 0 Health 0 END
-10. A_Molten_Clowntanium_Potion Str 25 Agi 25 Def 25 Con 25 Health 100 END
+Rusty plating,0,3,1,0
+Worn plating,0,5,1,0
+Pristine plating,0,8,2,0
+Clowntanium plating,0,11,4,0
+Toy mallet,1,0,0,0
+Squirt shotgun,4,0,0,0
+Boxing gloves,3,0,0,0
+Confetti cannon,10,-2,0,0
+Scrap metal,0,0,6,0
+Duct tape,0,0,8,0
+Dirty lens,0,0,0,2
+Clown goggles,0,0,0,4
+Clown binoculars,0,0,0,8

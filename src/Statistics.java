@@ -2,30 +2,24 @@ import java.util.Random;
 
 public class Statistics {
     //init variables
-    private int str;
-    private int agi;
-    private int def; 
-    private int con;
+    private int attack;
+    private int defense; 
     private int health;
     private boolean isDead;
 
     //default stats constructor
     public Statistics(){
-        str = 10;
-        agi = 10;
-        def = 10;
-        con = 10;
-        health = con*4;
+        attack = 10;
+        defense = 10;
+        health = 10;
         isDead = false;
     }
 
     //custom stats constructor
-    public Statistics(int str, int agi, int def, int con){
-        this.str = str;
-        this.agi = agi;
-        this.def = def;
-        this.con = con;
-        health = con*4;
+    public Statistics(int attack, int defense, int health){
+        this.attack = attack;
+        this.defense = defense;
+        this.health = health;
         isDead = false;
     }
 
@@ -41,43 +35,25 @@ public class Statistics {
         }
         Random rand = new Random();
         //generates a random integer between 5*mod (so that no Robot can have stats below 5) and 100
-        str = rand.nextInt(5*mod,101)/mod;
-        agi = rand.nextInt(5*mod,101)/mod;
-        con = rand.nextInt(5*mod,101)/mod;
-        def = rand.nextInt(5*mod,101)/mod;
-        health = con*4;
+        attack = rand.nextInt(5*mod,101)/mod;
+        defense = rand.nextInt(5*mod,101)/mod;
+        health = rand.nextInt(5*mod,101)/mod;
     }
 
-    public int getStr(){
-        return str;
+    public int getAttack(){
+        return attack;
     }
 
-    public void setStr(int str){
-        this.str = str;
+    public void setAttack(int str){
+        this.attack = str;
     }
 
-    public int getAgi(){
-        return agi;
+    public int getDefense(){
+        return defense;
     }
 
-    public void setAgi(int agi){
-        this.agi = agi;
-    }
-
-    public int getDef(){
-        return def;
-    }
-
-    public void setDef(int def){
-        this.def = def;
-    }
-
-    public int getCon(){
-        return con;
-    }
-
-    public void setCon(int con){
-        this.con = con;
+    public void setDefense(int def){
+        this.defense = def;
     }
 
     public int getHealth(){
@@ -92,7 +68,7 @@ public class Statistics {
     }
 
     public String toString(){
-        return "Stats:\nStr:\t" + str + "\nAgi:\t" + agi + " \nDef:\t" + def + "\nCon:\t" + con;
+        return "Stats:\nAttack:  " + attack + "\nDefense:  " + defense + "\nHealth:  " + health;
     }
 
     public boolean getDeath(){

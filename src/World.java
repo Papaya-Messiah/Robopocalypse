@@ -14,7 +14,8 @@ public class World implements ISubject {
     //2d grid of the world
     private Cell[][] grid;
     //side length of the square grid
-    public int worldSize = 50;
+    public final int worldSize = 50;
+    private ItemFactory factory;
     private ArrayList<IObserver> observers = new ArrayList<>();
 
     //constructor
@@ -39,6 +40,7 @@ public class World implements ISubject {
         Stage stage = new Stage();
         stage.popGrid();
         grid = stage.getGrid();
+        factory = new ItemFactory();
     }
 
     public static World getInstance() {
@@ -70,6 +72,10 @@ public class World implements ISubject {
         int distance;
         distance = Math.abs(x1-x2) + Math.abs(y1-y2);
         return distance;
+    }
+
+    public Item genItem() {
+        return factory.createItem();
     }
 
     @Override

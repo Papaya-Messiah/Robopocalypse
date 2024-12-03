@@ -50,7 +50,7 @@ public abstract class Robot {
     }
 
     //handles custom stats
-    public void popStats(int str, int agi, int def, int con){
-        stats = new Statistics(str, agi, def, con);
+    public void popStats(int attack, int defense, int health){
+        stats = new Statistics(attack, defense, health);
     }
 }

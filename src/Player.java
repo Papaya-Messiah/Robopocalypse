@@ -23,7 +23,7 @@ public class Player extends Robot implements ISubject,Serializable {
     private ArrayList<IObserver> observers = new ArrayList<>();
     //constructor
     private Player() {
-        view_distance = 5;
+        view_distance = 50;
     }
     public void savePlayer(){
         Scanner userInput = new Scanner(System.in);

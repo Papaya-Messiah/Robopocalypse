@@ -8,6 +8,7 @@ public class Statistics {
     private int con;
     private int health;
     private boolean isDead;
+    private PlayerObserver observer;
 
     //default stats constructor
     public Statistics(){

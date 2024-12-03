@@ -69,6 +69,7 @@ public class Controls implements KeyListener {
     }
 
     public void tryMovement(int keyCode) {
+        Game.getInstance().enemy.move();
         int posX = Player.getInstance().getX();
         int posY = Player.getInstance().getY();
         //updating the direction the player is facing

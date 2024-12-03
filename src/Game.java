@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class Game {
     private static Game instance = new Game();
+    public Enemy enemy = new Enemy();
 
     //constructor
     private Game() {
@@ -27,6 +28,9 @@ public class Game {
         Player.getInstance().popStats("default");
         Player.getInstance().loadPlayer();
         Player.getInstance().setCoords(2, 2);
+
+        enemy.popStats("default");
+        enemy.setCoords(27, 21);
 
         UI.getInstance().setMsg("Welcome to Robopocalypse!");
 

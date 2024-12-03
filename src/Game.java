@@ -1,6 +1,3 @@
-
-import java.io.IOException;
-
 /*
  * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
  * Date: 10/14/2024
@@ -13,9 +10,7 @@ public class Game {
     private static Game instance = new Game();
 
     //constructor
-    private Game() {
-
-    }
+    private Game() { }
 
     //instance getter
     public static Game getInstance() {
@@ -23,9 +18,8 @@ public class Game {
     }
 
     //initializes the game
-    private void init() throws IOException, ClassNotFoundException {
+    private void init() {
         Player.getInstance().popStats("default");
-        Player.getInstance().loadPlayer();
         Player.getInstance().setCoords(2, 2);
 
         UI.getInstance().setMsg("Welcome to Robopocalypse!");
@@ -35,11 +29,13 @@ public class Game {
         Player.getInstance().addObserver(new PlayerObserver());
     }
 
-    public void run() throws IOException, ClassNotFoundException {
+    public void run() {
         init();
 
         //constantly handle events sent by the different objects in the game
         Display.getInstance().addKeyListener(new Controls());
+
+        World.getInstance().getCell(2, 4).setType(Cell.CellType.ITEM);
     }
 
     public void quit() {

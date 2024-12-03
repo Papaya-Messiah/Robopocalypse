@@ -1,8 +1,10 @@
 import java.lang.Math;
+import java.util.Random;
 
 public class Enemy extends Robot {
 
     private Cell.CellType currentCellType = Cell.CellType.WALL;
+    private int damage = 1;
 
     public Enemy(){
 
@@ -23,6 +25,7 @@ public class Enemy extends Robot {
     } 
 
     public void move(){
+        Random rand = new Random();
         //find direction of player relative to enemy
         int playerX = Player.getInstance().x_pos;
         int playerY = Player.getInstance().y_pos;
@@ -49,30 +52,50 @@ public class Enemy extends Robot {
             yDirection = null;
         }
 
-        Direction closestDirection = null;
+        Direction moveDirection = null;
 
         if (deltaX > deltaY){
-            closestDirection = xDirection;
+            if(deltaY == 0){
+                moveDirection = xDirection;
+            } else {
+                moveDirection = yDirection;
+            }
         } else if (deltaX < deltaY){
-            closestDirection = yDirection;
+            if(deltaX == 0){
+                moveDirection = yDirection;
+            } else {
+                moveDirection = xDirection;
+            }
+        } else if (deltaX == deltaY){
+            if (rand.nextInt(2) == 0){
+                moveDirection = xDirection;
+            } else {
+                moveDirection = yDirection;
+            }
         }
         
-        if (closestDirection == Direction.NORTH){
+        if (moveDirection == Direction.NORTH){
             if (World.getInstance().getCell(x_pos, y_pos-1).getType() != Cell.CellType.WALL) {
                 setCoords(x_pos, y_pos-1);
             }
-        } else if (closestDirection == Direction.SOUTH){
+        } else if (moveDirection == Direction.SOUTH){
             if (World.getInstance().getCell(x_pos, y_pos+1).getType() != Cell.CellType.WALL) {
                 setCoords(x_pos, y_pos+1);
             }
-        } else if (closestDirection == Direction.EAST){
+        } else if (moveDirection == Direction.EAST){
             if (World.getInstance().getCell(x_pos+1, y_pos).getType() != Cell.CellType.WALL) {
                 setCoords(x_pos+1, y_pos);
             }
-        } else if (closestDirection == Direction.WEST){
+        } else if (moveDirection == Direction.WEST){
             if (World.getInstance().getCell(x_pos-1, y_pos).getType() != Cell.CellType.WALL) {
                 setCoords(x_pos-1, y_pos);
             }
+        }
+    }
+
+    public void attack(){
+        if (World.getInstance().measureDistance(x_pos, y_pos, Player.getInstance().x_pos, Player.getInstance().y_pos) <= 1){
+            Player.getInstance().getStatistics().setHealth(Player.getInstance().getStatistics().getHealth() - damage);
         }
     }
 }

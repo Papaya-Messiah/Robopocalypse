@@ -89,6 +89,7 @@ public class Statistics {
         this.health = health;
         if (this.health <= 0){
             isDead = true;
+            //System.out.println("DIED");
         }
     }
 

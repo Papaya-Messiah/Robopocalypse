@@ -36,7 +36,7 @@ public class Item {
         return healthMod;
     }
 
-    public int getViewdistModt(){
+    public int getViewdistMod(){
         return viewdistMod;
     }
 

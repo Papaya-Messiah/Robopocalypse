@@ -36,6 +36,10 @@ public class Game {
         Display.getInstance().addKeyListener(new Controls());
 
         World.getInstance().getCell(2, 4).setType(Cell.CellType.ITEM);
+        World.getInstance().getCell(2, 5).setType(Cell.CellType.ITEM);
+        World.getInstance().getCell(2, 5).setType(Cell.CellType.ITEM);
+        World.getInstance().getCell(2, 6).setType(Cell.CellType.ITEM);
+        World.getInstance().getCell(2, 7).setType(Cell.CellType.ITEM);
     }
 
     public void quit() {

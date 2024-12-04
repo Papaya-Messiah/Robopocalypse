@@ -104,6 +104,21 @@ public class Player extends Robot implements ISubject {
         return invString;
     }
 
+    public void equip() {
+        if (!inventory.isEmpty()) {
+            Item toEquip = inventory.remove(0);
+            this.stats.setAttack(this.getAttack() + toEquip.getAttackMod());
+            this.stats.setDefense(this.getDefense() + toEquip.getDefenseMod());
+            this.stats.setHealth(this.getHealth() + toEquip.getHealthMod());
+            this.view_distance += toEquip.getViewdistMod();
+            UI.getInstance().setMsg("Equipped " + toEquip.getName());
+            notifyObservers();
+        }
+        else {
+            UI.getInstance().setMsg("No items in inventory to equip!");
+        }
+    }
+
     @Override
     public void addObserver(IObserver o) {
         observers.add(o);

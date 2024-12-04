@@ -8,48 +8,39 @@
 import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ItemFactory
 {
-    public ItemFactory() { }
+    private ArrayList<Item> itemList = new ArrayList<>();
+    private Random rand = new Random();
 
-    public Item createItem() {
-        Random rand = new Random();
+    public ItemFactory() {
+        populateList();
+    }
+
+    public void populateList() {
         File file = new File("Itemdatabase.txt");
         FileReader fd;
-        Item newItem = null;
         try {
             fd = new FileReader(file);
             Scanner in = new Scanner(fd);
-
-            //count lines in file
-            int lineCount = 0;
+            String line;
+            String[] itemParams;
             while (in.hasNextLine()) {
-                lineCount++;
-                in.nextLine();
+                line = in.nextLine();
+                itemParams = line.split(",");
+
+                itemList.add(new Item(itemParams[0], Integer.parseInt(itemParams[1]), Integer.parseInt(itemParams[2]), Integer.parseInt(itemParams[3]), Integer.parseInt(itemParams[4])));
             }
-
-            //reset scanner
             in.close();
-            fd = new FileReader(file);
-            in = new Scanner(fd);
-
-            //advance a random number of lines within range
-            for (int i = 0; i < rand.nextInt(lineCount); i++) {
-                in.nextLine();
-            }
-            String line = in.nextLine();
-            String[] itemParams = line.split(",");
-
-            newItem = new Item(itemParams[0], Integer.parseInt(itemParams[1]), Integer.parseInt(itemParams[2]), Integer.parseInt(itemParams[3]), Integer.parseInt(itemParams[4]));
-
-            in.close();
-
-            
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return newItem;
+    }
+
+    public Item createItem() {
+        return itemList.remove(rand.nextInt(itemList.size()));
     }
 }

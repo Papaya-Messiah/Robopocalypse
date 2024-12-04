@@ -1,14 +1,13 @@
-import java.lang.Math;
+import java.util.ArrayList;
 import java.util.Random;
 
-public class Enemy extends Robot {
+public class Enemy extends Robot implements ISubject {
 
     private Cell.CellType currentCellType = Cell.CellType.WALL;
-    private int damage = 1;
+    private Random rand = new Random();
+    private ArrayList<IObserver> observers = new ArrayList<>();
 
-    public Enemy(){
-
-    }
+    public Enemy(){ }
 
     public void setCoords(int x, int y) {
         //set the current cell type back to what it was before the enemy moves away
@@ -22,10 +21,17 @@ public class Enemy extends Robot {
 
         //temporarily set the occupying cell to the ENEMY type
         World.getInstance().getCell(x, y).setType(Cell.CellType.ENEMY);
-    } 
+    }
+
+    public void setHealth(int health){
+        this.stats.setHealth(health);
+        if (this.stats.getHealth() <= 0){
+            this.stats.setDeath(true);
+            notifyObservers();
+        }
+    }
 
     public void move(){
-        Random rand = new Random();
         //find direction of player relative to enemy
         int playerX = Player.getInstance().x_pos;
         int playerY = Player.getInstance().y_pos;
@@ -75,19 +81,19 @@ public class Enemy extends Robot {
         }
         
         if (moveDirection == Direction.NORTH){
-            if ((World.getInstance().getCell(x_pos, y_pos-1).getType() != Cell.CellType.WALL && World.getInstance().getCell(x_pos, y_pos-1).getType() != Cell.CellType.PLAYER)  && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
+            if (World.getInstance().getCell(x_pos, y_pos-1).getType() == Cell.CellType.EMPTY  && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
                 setCoords(x_pos, y_pos-1);
             }
         } else if (moveDirection == Direction.SOUTH){
-            if ((World.getInstance().getCell(x_pos, y_pos+1).getType() != Cell.CellType.WALL && World.getInstance().getCell(x_pos, y_pos+1).getType() != Cell.CellType.PLAYER) && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
+            if (World.getInstance().getCell(x_pos, y_pos+1).getType() == Cell.CellType.EMPTY && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
                 setCoords(x_pos, y_pos+1);
             }
         } else if (moveDirection == Direction.EAST){
-            if ((World.getInstance().getCell(x_pos+1, y_pos).getType() != Cell.CellType.WALL && World.getInstance().getCell(x_pos+1, y_pos).getType() != Cell.CellType.PLAYER) && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
+            if (World.getInstance().getCell(x_pos+1, y_pos).getType() == Cell.CellType.EMPTY && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
                 setCoords(x_pos+1, y_pos);
             }
         } else if (moveDirection == Direction.WEST){
-            if ((World.getInstance().getCell(x_pos-1, y_pos).getType() != Cell.CellType.WALL && World.getInstance().getCell(x_pos-1, y_pos).getType() != Cell.CellType.PLAYER) && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
+            if (World.getInstance().getCell(x_pos-1, y_pos).getType() == Cell.CellType.EMPTY && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
                 setCoords(x_pos-1, y_pos);
             }
         }
@@ -95,9 +101,20 @@ public class Enemy extends Robot {
         System.out.println("New enemy position: " + x_pos + ", " + y_pos);
     }
 
-    public void attack(){
-        if (World.getInstance().measureDistance(x_pos, y_pos, Player.getInstance().x_pos, Player.getInstance().y_pos) <= 1){
-            Player.getInstance().getStatistics().setHealth(Player.getInstance().getStatistics().getHealth() - damage);
+    @Override
+    public void addObserver(IObserver o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(IObserver o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver o : observers) {
+            o.update(this);
         }
     }
 }

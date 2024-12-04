@@ -109,13 +109,64 @@ public class Player extends Robot implements ISubject {
             Item toEquip = inventory.remove(0);
             this.stats.setAttack(this.getAttack() + toEquip.getAttackMod());
             this.stats.setDefense(this.getDefense() + toEquip.getDefenseMod());
-            this.stats.setHealth(this.getHealth() + toEquip.getHealthMod());
+            this.setHealth(this.getHealth() + toEquip.getHealthMod());
             this.view_distance += toEquip.getViewdistMod();
             UI.getInstance().setMsg("Equipped " + toEquip.getName());
             notifyObservers();
         }
         else {
             UI.getInstance().setMsg("No items in inventory to equip!");
+        }
+    }
+
+    public void setHealth(int health){
+        this.stats.setHealth(health);
+        if (this.stats.getHealth() <= 0){
+            this.stats.setDeath(true);
+            notifyObservers();
+        }
+    }
+
+    private void doDamage(Enemy e) {
+        //do damage to player
+        this.setHealth(this.getHealth() - e.getAttack());
+
+        //do damage to enemy
+        e.setHealth(e.getHealth() - this.getAttack());
+        UI.getInstance().setMsg("Enemy attacked, Player health:" + this.getHealth() + " Enemy health:" + e.stats.getHealth());
+        notifyObservers();
+    }
+
+    public void attack() {
+        if (getFacingCell().getType() == Cell.CellType.ENEMY) {
+            for (int i = 0; i < Game.getInstance().enemies.size(); i++) {
+                Enemy e = Game.getInstance().enemies.get(i);
+                switch (this.facing) {
+                    case NORTH:
+                        if (e.getX() == this.getX() && e.getY() == this.getY()-1) {
+                            doDamage(e);
+                        }
+                        break;
+                    case SOUTH:
+                        if (e.getX() == this.getX() && e.getY() == this.getY()+1) {
+                            doDamage(e);
+                        }
+                        break;
+                    case EAST:
+                        if (e.getX() == this.getX()+1 && e.getY() == this.getY()) {
+                            doDamage(e);
+                        }
+                        break;
+                    case WEST:
+                        if (e.getX() == this.getX()-1 && e.getY() == this.getY()) {
+                            doDamage(e);
+                        }
+                        break;
+                }
+            }
+        }
+        else {
+            UI.getInstance().setMsg("You are not facing an enemy to attack.");
         }
     }
 

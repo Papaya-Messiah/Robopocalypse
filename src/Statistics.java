@@ -6,12 +6,11 @@ public class Statistics {
     private int defense; 
     private int health;
     private boolean isDead;
-    private PlayerObserver observer;
 
     //default stats constructor
     public Statistics(){
-        attack = 10;
-        defense = 10;
+        attack = 1;
+        defense = 0;
         health = 10;
         isDead = false;
     }
@@ -63,10 +62,6 @@ public class Statistics {
 
     public void setHealth(int health){
         this.health = health;
-        if (this.health <= 0){
-            isDead = true;
-            //System.out.println("DIED");
-        }
     }
 
     public String toString(){

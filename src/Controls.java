@@ -33,7 +33,7 @@ public class Controls implements KeyListener {
     public Controls() {
         moveKeys.addAll(Arrays.asList(W, A, S, D));
         commandKeys.addAll(Arrays.asList(H, E, F, G, C, X, Z, R));
-        UI.getInstance().setControls("Move:\t\tWASD\nInspect:\tE\nHelp:\t\tH\nQuit:\t\tQ");
+        UI.getInstance().setControls("Move:\t\tWASD\nInspect:\tF\nEquip:\t\tE\nHelp:\t\tH\nQuit:\t\tQ");
     }
 
     @Override
@@ -62,8 +62,11 @@ public class Controls implements KeyListener {
             case H:
                 commands.list.get("help").execute();
                 break;
-            case E:
+            case F:
                 commands.list.get("inspect").execute();
+                break;
+            case E:
+                commands.list.get("equip").execute();
                 break;
         }
     }

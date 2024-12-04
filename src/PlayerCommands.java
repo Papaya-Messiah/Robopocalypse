@@ -14,6 +14,7 @@ public class PlayerCommands {
     public PlayerCommands() {
         list.put("help", new HelpCommand());
         list.put("inspect", new InspectCommand());
+        list.put("equip", new EquipCommand());
     }
 
     interface Command {
@@ -41,17 +42,10 @@ public class PlayerCommands {
         }
     }
 
-    public class PickupCommand implements Command {
-        @Override
-        public void execute() {
-
-        }
-    }
-
     public class EquipCommand implements Command {
         @Override
         public void execute() {
-
+            Player.getInstance().equip();
         }
     }
 }

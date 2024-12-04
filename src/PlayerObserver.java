@@ -9,12 +9,8 @@ public class PlayerObserver implements IObserver {
 
     @Override
     public void update(Object o) {
-        System.out.println("Player event observed!");
+        UI.getInstance().setInv(Player.getInstance().descInventory());
+        UI.getInstance().setStats(Player.getInstance().getStatistics().toString());
     }
-    @Override
-    public void death(){
-        System.out.println("Player died.");
-        Player.getInstance().savePlayer();
-        System.exit(0);
-    }
+
 }

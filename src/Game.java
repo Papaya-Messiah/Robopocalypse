@@ -6,9 +6,11 @@
  * Is an eager-instantiation Singleton.
  */
 
+import java.util.ArrayList;
+
 public class Game {
     private static Game instance = new Game();
-    public Enemy enemy = new Enemy();
+    public ArrayList<Enemy> enemies = new ArrayList<>();
 
     //constructor
     private Game() { }
@@ -23,14 +25,23 @@ public class Game {
         Player.getInstance().popStats("default");
         Player.getInstance().setCoords(2, 2);
 
-        enemy.popStats("default");
-        enemy.setCoords(27, 21);
+        int toSpawn = 10;
+        for (int i = 0; i < toSpawn; i++) {
+            Enemy toAdd = new Enemy();
+            toAdd.popStats("default");
+            toAdd.setCoords(27 + i*2, 21);
+            enemies.add(toAdd);
+        }
 
         UI.getInstance().setMsg("Welcome to Robopocalypse!");
 
         //adding observers
         World.getInstance().addObserver(new WorldObserver());
         Player.getInstance().addObserver(new PlayerObserver());
+        EnemyObserver enemyObserver = new EnemyObserver();
+        for (Enemy e : enemies) {
+            e.addObserver(enemyObserver);
+        }
     }
 
     public void run() {

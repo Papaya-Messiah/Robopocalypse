@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 public class Controls implements KeyListener {
+    //hardcoding the keyCodes to what button is pressed
     private final int Q = 81;
     private final int W = 87;
     private final int A = 65;
@@ -18,11 +19,7 @@ public class Controls implements KeyListener {
     private final int D = 68;
     private final int E = 69;
     private final int F = 70;
-    private final int G = 71;
-    private final int C = 87;
     private final int X = 88;
-    private final int Z = 90;
-    private final int R = 82;
     private final int H = 72;
 
     private HashSet<Integer> moveKeys = new HashSet<>();
@@ -31,13 +28,18 @@ public class Controls implements KeyListener {
     private PlayerCommands commands = new PlayerCommands();
 
     public Controls() {
+        //add the movekeys to the HashSet
         moveKeys.addAll(Arrays.asList(W, A, S, D));
-        commandKeys.addAll(Arrays.asList(H, E, F, G, C, X, Z, R));
+
+        //add the commandkeys to the HashSet
+        commandKeys.addAll(Arrays.asList(H, E, F, X));
         UI.getInstance().setControls("Move:\t\tWASD\nAttack:\t\tX\nInspect:\tF\nEquip:\t\tE\nHelp:\t\tH\nQuit:\t\tQ");
     }
 
+    //happens when key is pressed
     @Override
     public void keyPressed(KeyEvent e) {
+        //get keyCode
         int keyCode = e.getKeyCode();
         System.out.println("Detected key:" + keyCode);
         //quit when q is pressed
@@ -57,6 +59,7 @@ public class Controls implements KeyListener {
         }
     }
 
+    //execute different commands depending on the key pressed
     public void doCommand(int keyCode) {
         switch (keyCode) {
             case H:
@@ -74,6 +77,7 @@ public class Controls implements KeyListener {
         }
     }
 
+    //attempt to move, the player cannot move into walls or enemies
     public void tryMovement(int keyCode) {
         //Game.getInstance().enemy.move();
         int posX = Player.getInstance().getX();

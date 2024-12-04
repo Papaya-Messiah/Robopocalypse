@@ -8,39 +8,39 @@
 
 public class Item {
     private String itemName;
-    private int Str;
-    private int Agi;
-    private int Def;
-    private int Con;
-    private int Health;
-    public Item(String name, int Strength, int Agility, int Defense, int Constitution, int Heal)
-    {
+    private int attackMod;
+    private int defenseMod;
+    private int healthMod;
+    private int viewdistMod;
+    public Item (String name, int atk, int def, int hp, int view) {
         this.itemName = name;
-        this.Str = Strength;
-        this.Agi = Agility;
-        this.Def = Defense;
-        this.Con = Constitution;
-        this.Health = Heal;
+        this.attackMod = atk;
+        this.defenseMod = def;
+        this.healthMod = hp;
+        this.viewdistMod = view;
     }
+
     public String getName(){
         return itemName;
     }
-    public int getStr(){
-        return Str;
+
+    public int getAttackMod(){
+        return attackMod;
     }
-    public int getAgi(){
-        return Agi;
+
+    public int getDefenseMod(){
+        return defenseMod;
     }
-    public int getDef(){
-        return Def;
+
+    public int getHealthMod(){
+        return healthMod;
     }
-    public int getCon(){
-        return Con;
+
+    public int getViewdistMod(){
+        return viewdistMod;
     }
-    public int getHealth(){
-        return Health;
-    }
-    public void printItemInfo(){
-        System.out.println(itemName + " str: " + Str + " Agi: " + Agi + " Def: " + Def + " Con: " + Con + " Health: " + Health);
+
+    public String toString() {
+        return "Name: " + itemName + " Attack Modifier: " + attackMod + " Defense Modifier: " + defenseMod + " Health Modifier: " + healthMod + " View Distance Modifier: " + viewdistMod;
     }
 }

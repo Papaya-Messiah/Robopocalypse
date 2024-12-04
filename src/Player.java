@@ -7,102 +7,19 @@
  * Is the receiver of the command pattern implemented by PlayerCommands
  */
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class Player extends Robot implements ISubject,Serializable {
+public class Player extends Robot implements ISubject {
     private static Player instance = new Player();
     private int view_distance;
     private Direction facing = Direction.SOUTH; //faces south by default
     private Cell.CellType currentCellType = Cell.CellType.WALL;
-    private ArrayList<Item> inventory;
+    private ArrayList<Item> inventory = new ArrayList<>();
     private ArrayList<IObserver> observers = new ArrayList<>();
+
     //constructor
     private Player() {
         view_distance = 5;
-    }
-    public void savePlayer(){
-        Scanner userInput = new Scanner(System.in);
-        System.out.println("Would you like to save? (Y/N)");
-        String userChoice = userInput.nextLine();
-        if(userChoice.toLowerCase().equals("y")){
-            try{
-                System.out.println("Please enter a save name: ");
-                userChoice = userInput.nextLine();
-                File playerObject = new File(userChoice);
-                if(playerObject.createNewFile()){
-                    System.out.println("File Created: " + playerObject.getName() );
-                    FileWriter playerWriter = new FileWriter(userChoice);
-                    //playerWriter.write("Str: " + str + "\n" + "Agi: " + agi + "\n" + "Def: " + def + " \n" + "Con: " + con + "\n");
-                    playerWriter.write("Str: " + stats.getStr() + "\n" + "Agi: " + stats.getAgi() + "\n" + "Def: " + stats.getDef() + " \n" + "Con: " + stats.getCon() + "\n");
-                    playerWriter.close();
-                }
-                else{
-                    System.out.println("Overwriting file");
-                    FileWriter playerWriter = new FileWriter(userChoice);
-                    playerWriter.write("Str: " + stats.getStr() + "\n" + "Agi: " + stats.getAgi() + "\n" + "Def: " + stats.getDef() + " \n" + "Con: " + stats.getCon() + "\n");
-                    playerWriter.close();
-                }
-            }
-            catch(Exception e){
-                System.out.println("An error occured");
-            }
-        }
-        else {
-            System.out.println("Not saving. Goodbye");
-        }
-        userInput.close();
-    }
-
-    public void loadPlayer(){
-        try{
-            Scanner userInput = new Scanner(System.in);
-            System.out.println("Load Character? (Y/N)");
-            String userChoice = userInput.nextLine();
-            if(userChoice.equals("Y") || userChoice.equals("y")){
-                System.out.println("Enter Save name: ");
-                userChoice = userInput.nextLine();
-                File f = new File(userChoice);
-                if (f.exists()) {
-                    System.out.println("Loading character");
-                    Scanner txt_Reader = new Scanner(new FileReader(userChoice));
-                        String breaker = txt_Reader.next();
-                        String statNumString = txt_Reader.next();
-                        //this.str = Integer.parseInt(statNumString);
-                        stats.setStr(Integer.parseInt(statNumString));
-                        breaker = txt_Reader.next();  
-                        statNumString = txt_Reader.next();
-                        //this.agi = Integer.parseInt(statNumString);
-                        stats.setAgi(Integer.parseInt(statNumString));
-                        breaker = txt_Reader.next();
-                        statNumString = txt_Reader.next();
-                        //this.def = Integer.parseInt(statNumString);
-                        stats.setDef(Integer.parseInt(statNumString));
-                        breaker = txt_Reader.next();
-                        statNumString = txt_Reader.next();
-                        //this.con = Integer.parseInt(statNumString);
-                        stats.setCon(Integer.parseInt(statNumString));
-                        //this.health = con * 4;
-                        stats.setHealth(stats.getCon()*4);
-                        txt_Reader.close();
-                }
-                else{
-                    System.out.println("No save found");
-                    System.out.println("Default Character generated");
-                }
-            }
-            else{
-                System.out.println("Starting with new Character.");
-            }
-            userInput.close();
-        }
-        catch(Exception e){
-            System.out.println("Uh oh");
-        }
     }
 
     public static Player getInstance() {
@@ -144,7 +61,10 @@ public class Player extends Robot implements ISubject,Serializable {
 
         //if player has moved into an item, pick it up
         if (currentCellType == Cell.CellType.ITEM) {
-            this.addItem(ItemHub.getInstance().generateItem());
+            Item newItem = World.getInstance().genItem();
+            this.addItem(newItem);
+            UI.getInstance().setMsg("Picked up a(n) " + newItem.toString());
+            notifyObservers();
             //empty the cell of the item
             currentCellType = Cell.CellType.EMPTY;
         }
@@ -182,6 +102,21 @@ public class Player extends Robot implements ISubject,Serializable {
             invString += (i.getName() + "\n");
         }
         return invString;
+    }
+
+    public void equip() {
+        if (!inventory.isEmpty()) {
+            Item toEquip = inventory.remove(0);
+            this.stats.setAttack(this.getAttack() + toEquip.getAttackMod());
+            this.stats.setDefense(this.getDefense() + toEquip.getDefenseMod());
+            this.stats.setHealth(this.getHealth() + toEquip.getHealthMod());
+            this.view_distance += toEquip.getViewdistMod();
+            UI.getInstance().setMsg("Equipped " + toEquip.getName());
+            notifyObservers();
+        }
+        else {
+            UI.getInstance().setMsg("No items in inventory to equip!");
+        }
     }
 
     @Override

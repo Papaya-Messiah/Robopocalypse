@@ -41,6 +41,9 @@ public class ItemFactory
     }
 
     public Item createItem() {
+        if (itemList.isEmpty()) {
+            populateList();
+        }
         return itemList.remove(rand.nextInt(itemList.size()));
     }
 }

@@ -36,6 +36,18 @@ public abstract class Robot {
         return stats;
     }
 
+    public int getAttack() {
+        return stats.getAttack();
+    }
+
+    public int getDefense() {
+        return stats.getDefense();
+    }
+
+    public int getHealth() {
+        return stats.getHealth();
+    }
+
     //handles default stats and random stats
     public void popStats(String statMethod){
         if (statMethod.equals("default")){

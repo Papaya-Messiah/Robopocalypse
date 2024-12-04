@@ -12,12 +12,16 @@ public class UI {
     private String inv;
     private String controls;
 
+    //constructor
     private UI() {}
 
     public static UI getInstance() {
         return instance;
     }
 
+    /*
+     * All setters call their respective Display updates.
+     */
     public void setMsg(String m) {
         msg = m;
         Display.getInstance().updateMessageDisplay();

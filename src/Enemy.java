@@ -1,9 +1,16 @@
+/*
+ * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
+ * Date: 12/1/2024
+ * 
+ * Defines enemies that will chase and fight the player
+ * setHealth is part of a Delegate design pattern, Enemy delegates to Statistics
+ */
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Enemy extends Robot implements ISubject {
 
-    private Cell.CellType currentCellType = Cell.CellType.WALL;
+    private Cell.CellType currentCellType = Cell.CellType.EMPTY;
     private Random rand = new Random();
     private ArrayList<IObserver> observers = new ArrayList<>();
 
@@ -23,6 +30,7 @@ public class Enemy extends Robot implements ISubject {
         World.getInstance().getCell(x, y).setType(Cell.CellType.ENEMY);
     }
 
+    //setHealth that delegates to the contained statistics
     public void setHealth(int health){
         this.stats.setHealth(health);
         if (this.stats.getHealth() <= 0){
@@ -80,6 +88,7 @@ public class Enemy extends Robot implements ISubject {
             }
         }
         
+        //check to make sure enemy is allowed to move
         if (moveDirection == Direction.NORTH){
             if (World.getInstance().getCell(x_pos, y_pos-1).getType() == Cell.CellType.EMPTY  && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
                 setCoords(x_pos, y_pos-1);
@@ -97,8 +106,10 @@ public class Enemy extends Robot implements ISubject {
                 setCoords(x_pos-1, y_pos);
             }
         }
+        
+        //update world display
         World.getInstance().notifyObservers(); 
-        System.out.println("New enemy position: " + x_pos + ", " + y_pos);
+        //System.out.println("New enemy position: " + x_pos + ", " + y_pos);
     }
 
     @Override

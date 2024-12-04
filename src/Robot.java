@@ -1,12 +1,17 @@
+/*
+ * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
+ * Date: 12/1/2024
+ * 
+ * Base class that both Player and Enemy inherit from
+ */
+
 public abstract class Robot {
     protected String name;
     protected int x_pos;
     protected int y_pos;
     protected Statistics stats = new Statistics();
 
-    public Robot(){
-
-    }
+    public Robot(){ }
 
     public Robot(String name, int x_pos, int y_pos){
         this.name = name;

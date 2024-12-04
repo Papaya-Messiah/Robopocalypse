@@ -1,22 +1,16 @@
+/*
+ * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
+ * Date: 12/1/2024
+ * 
+ * Stores and populates the world grid
+ */
+
 public class Stage {
     public int worldSize = 50;
     private Cell[][] grid = new Cell[worldSize][worldSize];
 
     public void popGrid(){
-        /*for (int i = 0; i < worldSize; i++) {
-            for (int j = 0; j < worldSize; j++) {
-                if (i == 0 || j == 0) {
-                    grid[i][j] = new Cell(Cell.CellType.WALL);
-                }
-                else if (i == worldSize-1 || j ==worldSize-1) {
-                    grid[i][j] = new Cell(Cell.CellType.WALL);
-                }
-                else {
-                    grid[i][j] = new Cell(Cell.CellType.EMPTY);
-                }
-            }
-        } */
-
+        //grid representation that will be loaded into the world
         int[][] tempGrid = new int[][] {
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             {1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -70,6 +64,7 @@ public class Stage {
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
         };
 
+        //load grid into the World
         for (int i = 0; i < worldSize; i++){
             for (int j = 0; j < worldSize; j++){
                 if (tempGrid[i][j] == 1){

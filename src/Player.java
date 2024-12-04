@@ -19,7 +19,7 @@ public class Player extends Robot implements ISubject {
 
     //constructor
     private Player() {
-        view_distance = 50;
+        view_distance = 10;
     }
 
     public static Player getInstance() {
@@ -30,6 +30,7 @@ public class Player extends Robot implements ISubject {
         facing = d;
     }
 
+    //returns the cell the player is facing
     public Cell getFacingCell() {
         switch (facing) {
             case NORTH:
@@ -45,10 +46,12 @@ public class Player extends Robot implements ISubject {
         }
     }
 
+    //inspects the cell in front of the player
     public void inspect() {
         UI.getInstance().setMsg("In front of you stands a(n) " + getFacingCell().getType().toString().toLowerCase());
     }
 
+    //move the player
     public void setCoords(int x, int y) {
         //set the current cell type back to what it was before the player moves away
         World.getInstance().getCell(x_pos, y_pos).setType(currentCellType);
@@ -61,7 +64,7 @@ public class Player extends Robot implements ISubject {
 
         //if player has moved into an item, pick it up
         if (currentCellType == Cell.CellType.ITEM) {
-            Item newItem = World.getInstance().genItem();
+            Item newItem = Game.getInstance().genItem();
             this.addItem(newItem);
             UI.getInstance().setMsg("Picked up a(n) " + newItem.toString());
             notifyObservers();
@@ -74,6 +77,7 @@ public class Player extends Robot implements ISubject {
         updateVisible();
     } 
 
+    //make the cells within the player's viewdistance visible
     public void updateVisible() {
         //loop over grid
         for (int i = 0; i < World.getInstance().getGrid().length; i++) {
@@ -92,10 +96,12 @@ public class Player extends Robot implements ISubject {
         World.getInstance().notifyObservers();
     }
 
+    //add item to inventory
     public void addItem(Item i){
         inventory.add(i);
     }
 
+    //list just item names
     public String descInventory(){
         String invString = "";
         for (Item i : inventory){
@@ -104,6 +110,7 @@ public class Player extends Robot implements ISubject {
         return invString;
     }
 
+    //equip item from inventory and modify stats accordingly
     public void equip() {
         if (!inventory.isEmpty()) {
             Item toEquip = inventory.remove(0);
@@ -119,6 +126,7 @@ public class Player extends Robot implements ISubject {
         }
     }
 
+    //delegates to statistics
     public void setHealth(int health){
         this.stats.setHealth(health);
         if (this.stats.getHealth() <= 0){
@@ -127,6 +135,7 @@ public class Player extends Robot implements ISubject {
         }
     }
 
+    //where the damage to player and enemy happen from fighting
     private void doDamage(Enemy e) {
         //do damage to player
         this.setHealth(this.getHealth() - e.getAttack());
@@ -137,8 +146,10 @@ public class Player extends Robot implements ISubject {
         notifyObservers();
     }
 
+    //player tries to attack the cell they are facing
     public void attack() {
         if (getFacingCell().getType() == Cell.CellType.ENEMY) {
+            //search enemy list for enemy with matching coordinates
             for (int i = 0; i < Game.getInstance().enemies.size(); i++) {
                 Enemy e = Game.getInstance().enemies.get(i);
                 switch (this.facing) {

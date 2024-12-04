@@ -2,7 +2,8 @@
  * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
  * Date: 11/28/2024
  * 
- * An implementation of the Factory Design that generates items.
+ * An implementation of the Factory Design pattern that generates items.
+ * Items are generated from a list located in "Itemdatabase.txt"
  */
 
 import java.io.File;
@@ -20,6 +21,7 @@ public class ItemFactory
         populateList();
     }
 
+    //read the items from the file and store them in itemList to spawn items
     public void populateList() {
         File file = new File("Itemdatabase.txt");
         FileReader fd;
@@ -40,6 +42,7 @@ public class ItemFactory
         }
     }
 
+    //spawn items
     public Item createItem() {
         if (itemList.isEmpty()) {
             populateList();

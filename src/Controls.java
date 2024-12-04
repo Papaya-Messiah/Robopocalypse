@@ -72,6 +72,7 @@ public class Controls implements KeyListener {
     }
 
     public void tryMovement(int keyCode) {
+        //Game.getInstance().enemy.move();
         int posX = Player.getInstance().getX();
         int posY = Player.getInstance().getY();
         //updating the direction the player is facing
@@ -86,22 +87,23 @@ public class Controls implements KeyListener {
         }
         //checking that the player is not about to move into an occupied cell
         if (keyCode == W) {
-            if (World.getInstance().getCell(posX, posY-1).getType() != Cell.CellType.WALL) {
+            if (World.getInstance().getCell(posX, posY-1).getType() != Cell.CellType.WALL && World.getInstance().getCell(posX, posY-1).getType() != Cell.CellType.ENEMY) {
                 Player.getInstance().setCoords(posX, posY-1);
             }
         } else if (keyCode == A) {
-            if (World.getInstance().getCell(posX-1, posY).getType() != Cell.CellType.WALL) {
+            if (World.getInstance().getCell(posX-1, posY).getType() != Cell.CellType.WALL && World.getInstance().getCell(posX-1, posY).getType() != Cell.CellType.ENEMY) {
                 Player.getInstance().setCoords(posX-1, posY);
             }
         } else if (keyCode == S) {
-            if (World.getInstance().getCell(posX, posY+1).getType() != Cell.CellType.WALL) {
+            if (World.getInstance().getCell(posX, posY+1).getType() != Cell.CellType.WALL && World.getInstance().getCell(posX, posY+1).getType() != Cell.CellType.ENEMY) {
                 Player.getInstance().setCoords(posX, posY+1);
             }
         } else if (keyCode == D) {
-            if (World.getInstance().getCell(posX+1, posY).getType() != Cell.CellType.WALL) {
+            if (World.getInstance().getCell(posX+1, posY).getType() != Cell.CellType.WALL && World.getInstance().getCell(posX+1, posY).getType() != Cell.CellType.ENEMY) {
                 Player.getInstance().setCoords(posX+1, posY);
             }
         }
+        Game.getInstance().enemy.move();
         System.out.println("New player position: " + Player.getInstance().getX() + ", " + Player.getInstance().getY());
     }
 

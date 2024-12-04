@@ -1,4 +1,3 @@
-import java.io.IOException;
 /*
  * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
  * Date: 10/14/2024
@@ -7,7 +6,7 @@ import java.io.IOException;
  */
 
 public class Runner {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) {
         Game.getInstance().run();
     }
 }

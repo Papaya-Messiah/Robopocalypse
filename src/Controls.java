@@ -33,7 +33,7 @@ public class Controls implements KeyListener {
     public Controls() {
         moveKeys.addAll(Arrays.asList(W, A, S, D));
         commandKeys.addAll(Arrays.asList(H, E, F, G, C, X, Z, R));
-        UI.getInstance().setControls("Move:\t\tWASD\nInspect:\tF\nEquip:\t\tE\nHelp:\t\tH\nQuit:\t\tQ");
+        UI.getInstance().setControls("Move:\t\tWASD\nAttack:\t\tX\nInspect:\tF\nEquip:\t\tE\nHelp:\t\tH\nQuit:\t\tQ");
     }
 
     @Override
@@ -67,6 +67,9 @@ public class Controls implements KeyListener {
                 break;
             case E:
                 commands.list.get("equip").execute();
+                break;
+            case X:
+                commands.list.get("attack").execute();
                 break;
         }
     }
@@ -103,7 +106,9 @@ public class Controls implements KeyListener {
                 Player.getInstance().setCoords(posX+1, posY);
             }
         }
-        Game.getInstance().enemy.move();
+        for (Enemy e : Game.getInstance().enemies) {
+            e.move();
+        }
         System.out.println("New player position: " + Player.getInstance().getX() + ", " + Player.getInstance().getY());
     }
 

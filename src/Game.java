@@ -10,14 +10,24 @@ import java.util.ArrayList;
 
 public class Game {
     private static Game instance = new Game();
+    private ItemFactory factory;
+
+    //all enemies
     public ArrayList<Enemy> enemies = new ArrayList<>();
 
     //constructor
-    private Game() { }
+    private Game() {
+        factory = new ItemFactory();
+    }
 
     //instance getter
     public static Game getInstance() {
         return instance;
+    }
+
+    //creates an item
+    public Item genItem() {
+        return factory.createItem();
     }
 
     //initializes the game
@@ -25,6 +35,7 @@ public class Game {
         Player.getInstance().popStats("default");
         Player.getInstance().setCoords(2, 2);
 
+        //spawning enemies
         int toSpawn = 10;
         for (int i = 0; i < toSpawn; i++) {
             Enemy toAdd = new Enemy();
@@ -50,13 +61,21 @@ public class Game {
         //constantly handle events sent by the different objects in the game
         Display.getInstance().addKeyListener(new Controls());
 
+        //add some starting items for the player
         World.getInstance().getCell(2, 4).setType(Cell.CellType.ITEM);
         World.getInstance().getCell(2, 5).setType(Cell.CellType.ITEM);
         World.getInstance().getCell(2, 5).setType(Cell.CellType.ITEM);
         World.getInstance().getCell(2, 6).setType(Cell.CellType.ITEM);
         World.getInstance().getCell(2, 7).setType(Cell.CellType.ITEM);
+
+        //call player observers to populate the UI at the start of the game
+        Player.getInstance().notifyObservers();
+
+        //update world
+        World.getInstance().notifyObservers();
     }
 
+    //quit the program
     public void quit() {
         System.out.println("Quitting...");
         System.exit(0);

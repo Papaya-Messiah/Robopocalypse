@@ -15,38 +15,20 @@ public class World implements ISubject {
     private Cell[][] grid;
     //side length of the square grid
     public final int worldSize = 50;
-    private ItemFactory factory;
     private ArrayList<IObserver> observers = new ArrayList<>();
 
     //constructor
     private World() {
-        /*grid = new Cell[worldSize][worldSize];
-
-        //initializing cells to hold a value
-        for (int i = 0; i < worldSize; i++) {
-            for (int j = 0; j < worldSize; j++) {
-                if (i == 0 || j == 0) {
-                    grid[i][j] = new Cell(Cell.CellType.WALL);
-                }
-                else if (i == worldSize-1 || j ==worldSize-1) {
-                    grid[i][j] = new Cell(Cell.CellType.WALL);
-                }
-                else {
-                    grid[i][j] = new Cell(Cell.CellType.EMPTY);
-                }
-            }
-        } */
-
         Stage stage = new Stage();
         stage.popGrid();
         grid = stage.getGrid();
-        factory = new ItemFactory();
     }
 
     public static World getInstance() {
         return instance;
     }
 
+    //string representation of the world
     public String toString() {
         String display = "";
         for (int i = 0; i < worldSize; i++) {
@@ -72,10 +54,6 @@ public class World implements ISubject {
         int distance;
         distance = Math.abs(x1-x2) + Math.abs(y1-y2);
         return distance;
-    }
-
-    public Item genItem() {
-        return factory.createItem();
     }
 
     @Override

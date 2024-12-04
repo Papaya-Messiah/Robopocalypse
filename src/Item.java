@@ -2,7 +2,7 @@
  * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
  * Date: 11/20/2024
  * 
- * Item base class
+ * Items can be picked up and modify the player's statistics
  */
 
 
@@ -12,6 +12,8 @@ public class Item {
     private int defenseMod;
     private int healthMod;
     private int viewdistMod;
+
+    //constructor
     public Item (String name, int atk, int def, int hp, int view) {
         this.itemName = name;
         this.attackMod = atk;

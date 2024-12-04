@@ -4,6 +4,7 @@
  * 
  * Class in charge of displaying everything
  * This is one of the receivers in the command pattern
+ * This is an eager instantiation singleton
  */
 
 import java.awt.Color;
@@ -24,6 +25,7 @@ public class Display extends Frame {
     private TextArea controlDisplay;
     private Font font;
 
+    //constructor
     private Display() {
         setTitle("Robopocalypse");
         setLayout(new GridBagLayout());
@@ -43,8 +45,9 @@ public class Display extends Frame {
          * worldDisplay: used to display the player and world
          * statDisplay: used to display player statistics
          * invDisplay: used to display player inventory
-         * controlDisplay: used to display most commonly used control/keybind options
+         * controlDisplay: used to display the control/keybind options
          */
+
         msgDisplay = new TextArea(UI.getInstance().getMsg(), 3, 1, TextArea.SCROLLBARS_NONE);
         msgDisplay.setFont(font);
         msgDisplay.setEditable(false);
@@ -97,7 +100,7 @@ public class Display extends Frame {
         c.gridy += 1;
         add(controlDisplay, c);
 
-        //size of the window
+        //size of the window in pixels
         setSize(1000, 1000);
 
         //focusable so we can get KeyEvents
@@ -110,7 +113,10 @@ public class Display extends Frame {
         return instance;
     }
 
-    //update the worldDisplay with the most recent toString representaation
+    /*
+     * The methods below update the appropriate display element when called.
+     */
+    
     public void updateWorldDisplay() {
         worldDisplay.setText(World.getInstance().toString());
     }

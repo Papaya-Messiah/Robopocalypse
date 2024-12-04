@@ -1,3 +1,9 @@
+/*
+ * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
+ * Date: 12/1/2024
+ * 
+ * Observer in charge of receiving and processing enemy events
+ */
 public class EnemyObserver implements IObserver {
 
     @Override
@@ -11,6 +17,14 @@ public class EnemyObserver implements IObserver {
             Game.getInstance().enemies.remove(e);
             UI.getInstance().setMsg("Killed an enemy!");
             World.getInstance().notifyObservers();
+            if (Game.getInstance().enemies.isEmpty()) {
+                UI.getInstance().setMsg("$$$ Congratulations! All the enemies are dead and you have won. $$$\nThe game is over and will close in 5 seconds.");
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                }
+                Game.getInstance().quit();
+            }
         }
     }
     

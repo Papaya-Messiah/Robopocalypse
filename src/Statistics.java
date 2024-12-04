@@ -1,3 +1,9 @@
+/*
+ * Authors: Luka Wilmink, Charlotte Lyda-Turner, Cole Lassiter
+ * Date: 12/1/2024
+ * 
+ * Class that encapsulates and populates the Statistics for Robots
+ */
 import java.util.Random;
 
 public class Statistics {

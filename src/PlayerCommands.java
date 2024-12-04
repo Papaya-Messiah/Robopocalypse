@@ -9,8 +9,10 @@
 import java.util.HashMap;
 
 public class PlayerCommands {
+    //command container
     public HashMap<String, Command> list = new HashMap<>();
 
+    //constructor
     public PlayerCommands() {
         list.put("help", new HelpCommand());
         list.put("inspect", new InspectCommand());
@@ -25,7 +27,7 @@ public class PlayerCommands {
     public class HelpCommand implements Command {
         @Override
         public void execute() {
-            UI.getInstance().setMsg("Help command output.");
+            UI.getInstance().setMsg("You are a robot in a post apocalyptic world.\nCollect items to get stronger and defeat the enemies.");
         }
     }
 

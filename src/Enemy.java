@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class Enemy extends Robot implements ISubject {
 
-    private Cell.CellType currentCellType = Cell.CellType.EMPTY;
+    private Cell.CellType currentCellType = Cell.CellType.WALL;
     private Random rand = new Random();
     private ArrayList<IObserver> observers = new ArrayList<>();
 

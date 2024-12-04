@@ -75,22 +75,24 @@ public class Enemy extends Robot {
         }
         
         if (moveDirection == Direction.NORTH){
-            if (World.getInstance().getCell(x_pos, y_pos-1).getType() != Cell.CellType.WALL) {
+            if ((World.getInstance().getCell(x_pos, y_pos-1).getType() != Cell.CellType.WALL && World.getInstance().getCell(x_pos, y_pos-1).getType() != Cell.CellType.PLAYER)  && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
                 setCoords(x_pos, y_pos-1);
             }
         } else if (moveDirection == Direction.SOUTH){
-            if (World.getInstance().getCell(x_pos, y_pos+1).getType() != Cell.CellType.WALL) {
+            if ((World.getInstance().getCell(x_pos, y_pos+1).getType() != Cell.CellType.WALL && World.getInstance().getCell(x_pos, y_pos+1).getType() != Cell.CellType.PLAYER) && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
                 setCoords(x_pos, y_pos+1);
             }
         } else if (moveDirection == Direction.EAST){
-            if (World.getInstance().getCell(x_pos+1, y_pos).getType() != Cell.CellType.WALL) {
+            if ((World.getInstance().getCell(x_pos+1, y_pos).getType() != Cell.CellType.WALL && World.getInstance().getCell(x_pos+1, y_pos).getType() != Cell.CellType.PLAYER) && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
                 setCoords(x_pos+1, y_pos);
             }
         } else if (moveDirection == Direction.WEST){
-            if (World.getInstance().getCell(x_pos-1, y_pos).getType() != Cell.CellType.WALL) {
+            if ((World.getInstance().getCell(x_pos-1, y_pos).getType() != Cell.CellType.WALL && World.getInstance().getCell(x_pos-1, y_pos).getType() != Cell.CellType.PLAYER) && World.getInstance().measureDistance(x_pos, y_pos, playerX, playerY) > 2) {
                 setCoords(x_pos-1, y_pos);
             }
         }
+        World.getInstance().notifyObservers(); 
+        System.out.println("New enemy position: " + x_pos + ", " + y_pos);
     }
 
     public void attack(){

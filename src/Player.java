@@ -19,7 +19,7 @@ public class Player extends Robot implements ISubject {
 
     //constructor
     private Player() {
-        view_distance = 5;
+        view_distance = 50;
     }
 
     public static Player getInstance() {
